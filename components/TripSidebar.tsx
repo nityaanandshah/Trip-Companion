@@ -83,9 +83,20 @@ export default function TripSidebar({ trip, isOwner }: TripSidebarProps) {
               </span>
             </div>
           )}
-          <div>
+          <div className="flex-1">
             <p className="font-semibold text-gray-900">{trip.owner.name}</p>
-            <p className="text-sm text-gray-500">{trip.owner.email}</p>
+            <p className="text-sm text-gray-500 mb-2">{trip.owner.email}</p>
+            <a
+              href={`/profile/${trip.owner.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+            >
+              View Profile
+              <svg className="ml-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
           </div>
         </div>
       </div>
