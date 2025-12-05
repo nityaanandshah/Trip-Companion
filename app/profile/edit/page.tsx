@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 
 export default function EditProfilePage() {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -17,6 +17,7 @@ export default function EditProfilePage() {
   
   const [formData, setFormData] = useState({
     name: '',
+    age: '',
     bio: '',
     avatarUrl: '',
   });
@@ -39,6 +40,7 @@ export default function EditProfilePage() {
         const data = await response.json();
         setFormData({
           name: data.name || '',
+          age: data.age?.toString() || '',
           bio: data.bio || '',
           avatarUrl: data.avatarUrl || '',
         });
@@ -81,6 +83,12 @@ export default function EditProfilePage() {
       if (response.ok) {
         const data = await response.json();
         setFormData((prev) => ({ ...prev, avatarUrl: data.avatarUrl }));
+        // Update the session with new avatar
+        await update({
+          user: {
+            image: data.avatarUrl,
+          },
+        });
         setSuccess('Avatar uploaded successfully!');
         setTimeout(() => setSuccess(''), 3000);
       } else {
@@ -111,6 +119,13 @@ export default function EditProfilePage() {
       });
 
       if (response.ok) {
+        // Update the session with new data
+        await update({
+          user: {
+            name: formData.name,
+            image: formData.avatarUrl,
+          },
+        });
         setSuccess('Profile updated successfully!');
         setTimeout(() => {
           router.push('/profile');
@@ -249,6 +264,23 @@ export default function EditProfilePage() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                   placeholder="Your name"
+                />
+              </div>
+
+              {/* Age */}
+              <div>
+                <label htmlFor="age" className="block text-sm font-medium text-gray-700">
+                  Age
+                </label>
+                <input
+                  type="number"
+                  id="age"
+                  min="13"
+                  max="120"
+                  value={formData.age}
+                  onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                  placeholder="Your age"
                 />
               </div>
 

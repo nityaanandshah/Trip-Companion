@@ -16,6 +16,7 @@ export async function GET() {
       select: {
         id: true,
         name: true,
+        age: true,
         email: true,
         avatarUrl: true,
         bio: true,
@@ -44,11 +45,21 @@ export async function PUT(request: Request) {
     }
 
     const body = await request.json();
-    const { name, bio, avatarUrl } = body;
+    const { name, age, bio, avatarUrl } = body;
 
     // Validate input
     if (name && name.trim().length < 1) {
       return NextResponse.json({ error: 'Name cannot be empty' }, { status: 400 });
+    }
+
+    if (age !== undefined && age !== '' && age !== null) {
+      const ageNum = parseInt(age);
+      if (isNaN(ageNum) || ageNum < 13 || ageNum > 120) {
+        return NextResponse.json(
+          { error: 'Age must be between 13 and 120' },
+          { status: 400 }
+        );
+      }
     }
 
     if (bio && bio.length > 500) {
@@ -63,12 +74,14 @@ export async function PUT(request: Request) {
       where: { id: session.user.id },
       data: {
         ...(name !== undefined && { name: name.trim() }),
+        ...(age !== undefined && age !== '' && age !== null && { age: parseInt(age) }),
         ...(bio !== undefined && { bio: bio.trim() }),
         ...(avatarUrl !== undefined && { avatarUrl }),
       },
       select: {
         id: true,
         name: true,
+        age: true,
         email: true,
         avatarUrl: true,
         bio: true,

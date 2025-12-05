@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
+import ConfirmModal from '@/components/ConfirmModal';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
@@ -20,6 +21,9 @@ interface Trip {
   requiredGroupSize: number;
   currentGroupSize: number;
   images: { imageUrl: string }[];
+  isOrganizer?: boolean;
+  attendeeStatus?: 'pending' | 'approved' | 'rejected';
+  attendeeId?: string;
   _count: {
     bookmarks: number;
     attendees: number;
@@ -32,6 +36,7 @@ export default function MyTripsPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [deleteModal, setDeleteModal] = useState<string | null>(null);
+  const [removeModal, setRemoveModal] = useState<{ tripId: string; attendeeId: string; tripTitle: string } | null>(null);
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -43,7 +48,7 @@ export default function MyTripsPage() {
     try {
       const url = filter === 'all' 
         ? '/api/trips/my-trips' 
-        : `/api/trips/my-trips?status=${filter}`;
+        : `/api/trips/my-trips?filter=${filter}`;
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
@@ -53,6 +58,24 @@ export default function MyTripsPage() {
       console.error('Error fetching trips:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleRemoveTrip = async () => {
+    if (!removeModal) return;
+    
+    const { tripId, attendeeId } = removeModal;
+    setRemoveModal(null);
+    
+    try {
+      const response = await fetch(`/api/trips/${tripId}/attendees/${attendeeId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setTrips(trips.filter(trip => trip.id !== tripId));
+      }
+    } catch (error) {
+      console.error('Error removing trip:', error);
     }
   };
 
@@ -139,20 +162,37 @@ export default function MyTripsPage() {
         </div>
 
         {/* Filters */}
-        <div className="mb-6 flex gap-2 overflow-x-auto">
-          {['all', 'open', 'draft', 'full', 'completed'].map((status) => (
-            <button
-              key={status}
-              onClick={() => setFilter(status)}
-              className={`rounded-xl px-4 py-2 text-sm font-semibold transition-all whitespace-nowrap ${
-                filter === status
-                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-gray-50 shadow'
-              }`}
-            >
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </button>
-          ))}
+        <div className="mb-6 flex gap-3 overflow-x-auto">
+          <button
+            onClick={() => setFilter('all')}
+            className={`rounded-xl px-6 py-3 text-sm font-semibold transition-all whitespace-nowrap ${
+              filter === 'all'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-50 shadow'
+            }`}
+          >
+            All Trips ({trips.length})
+          </button>
+          <button
+            onClick={() => setFilter('organized')}
+            className={`rounded-xl px-6 py-3 text-sm font-semibold transition-all whitespace-nowrap ${
+              filter === 'organized'
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-50 shadow'
+            }`}
+          >
+            🎯 Organized by Me ({trips.filter(t => t.isOrganizer).length})
+          </button>
+          <button
+            onClick={() => setFilter('attending')}
+            className={`rounded-xl px-6 py-3 text-sm font-semibold transition-all whitespace-nowrap ${
+              filter === 'attending'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-50 shadow'
+            }`}
+          >
+            ✈️ Requested by Me ({trips.filter(t => !t.isOrganizer).length})
+          </button>
         </div>
 
         {/* Trips Grid */}
@@ -184,7 +224,27 @@ export default function MyTripsPage() {
 
                 {/* Trip Info */}
                 <div className="p-6">
-                  <div className="mb-3 flex items-center gap-2">
+                  <div className="mb-3 flex items-center gap-2 flex-wrap">
+                    {/* Role Badge */}
+                    {trip.isOrganizer ? (
+                      <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
+                        🎯 Organizer
+                      </span>
+                    ) : trip.attendeeStatus === 'approved' ? (
+                      <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">
+                        ✅ You're Going!
+                      </span>
+                    ) : trip.attendeeStatus === 'pending' ? (
+                      <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+                        ⏳ Request Pending
+                      </span>
+                    ) : trip.attendeeStatus === 'rejected' ? (
+                      <span className="inline-flex items-center rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-800">
+                        ❌ Rejected
+                      </span>
+                    ) : null}
+                    
+                    {/* Trip Status Badge */}
                     <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
                       trip.status === 'open' ? 'bg-green-100 text-green-800' :
                       trip.status === 'draft' ? 'bg-gray-100 text-gray-800' :
@@ -236,18 +296,29 @@ export default function MyTripsPage() {
                     >
                       View
                     </Link>
-                    <Link
-                      href={`/trips/${trip.id}/edit`}
-                      className="rounded-lg border-2 border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:border-blue-500 hover:text-blue-600 transition-colors"
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => setDeleteModal(trip.id)}
-                      className="rounded-lg border-2 border-gray-200 px-4 py-2 text-sm font-semibold text-red-600 hover:border-red-500 hover:bg-red-50 transition-colors"
-                    >
-                      Delete
-                    </button>
+                    {trip.isOrganizer ? (
+                      <>
+                        <Link
+                          href={`/trips/${trip.id}/edit`}
+                          className="rounded-lg border-2 border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:border-blue-500 hover:text-blue-600 transition-colors"
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          onClick={() => setDeleteModal(trip.id)}
+                          className="rounded-lg border-2 border-gray-200 px-4 py-2 text-sm font-semibold text-red-600 hover:border-red-500 hover:bg-red-50 transition-colors"
+                        >
+                          Delete
+                        </button>
+                      </>
+                    ) : trip.attendeeStatus === 'rejected' && trip.attendeeId ? (
+                      <button
+                        onClick={() => setRemoveModal({ tripId: trip.id, attendeeId: trip.attendeeId!, tripTitle: trip.title })}
+                        className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
+                      >
+                        Remove
+                      </button>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -301,6 +372,18 @@ export default function MyTripsPage() {
           </div>
         </div>
       )}
+
+      {/* Remove Trip Confirmation Modal */}
+      <ConfirmModal
+        isOpen={removeModal !== null}
+        title="Remove Trip from My List"
+        message={`Are you sure you want to remove "${removeModal?.tripTitle}" from your trips list?`}
+        confirmText="Remove"
+        cancelText="Cancel"
+        confirmButtonClass="bg-red-600 hover:bg-red-700"
+        onConfirm={handleRemoveTrip}
+        onCancel={() => setRemoveModal(null)}
+      />
     </div>
   );
 }

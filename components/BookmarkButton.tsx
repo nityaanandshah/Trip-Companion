@@ -90,11 +90,11 @@ export default function BookmarkButton({
     <button
       onClick={toggleBookmark}
       disabled={loading}
-      className={`inline-flex items-center justify-center rounded-full transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed ${
+      className={`inline-flex items-center justify-center rounded-xl transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${
         bookmarked 
           ? 'bg-red-100 text-red-600 hover:bg-red-200' 
           : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-600'
-      } ${buttonSizeClasses[size]} ${className}`}
+      } ${showLabel ? 'px-6 py-3' : buttonSizeClasses[size]} ${className}`}
       title={bookmarked ? 'Remove bookmark' : 'Bookmark this trip'}
     >
       {loading ? (

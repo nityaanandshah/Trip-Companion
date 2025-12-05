@@ -2,7 +2,9 @@ import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import Navbar from '@/components/Navbar';
-import BookmarkButton from '@/components/BookmarkButton';
+import TripSidebar from '@/components/TripSidebar';
+import TripStatusBadges from '@/components/TripStatusBadges';
+import TripActions from '@/components/TripActions';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
@@ -69,10 +71,10 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
             </svg>
             Back to My Trips
           </Link>
-          <div className="mt-4 flex items-center justify-between">
+          <div className="mt-4 flex items-start justify-between">
             <div>
               <h1 className="text-4xl font-bold text-gray-900">{trip.title}</h1>
-              <div className="mt-3 flex items-center gap-3">
+              <div className="mt-3 flex items-center gap-3 flex-wrap">
                 <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
                   trip.status === 'open' ? 'bg-green-100 text-green-800' :
                   trip.status === 'draft' ? 'bg-gray-100 text-gray-800' :
@@ -86,19 +88,16 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
                     Dates Tentative
                   </span>
                 )}
+                <TripStatusBadges tripId={trip.id} isOwner={isOwner} />
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <BookmarkButton tripId={trip.id} size="lg" showLabel />
-              {isOwner && (
-                <Link
-                  href={`/trips/${trip.id}/edit`}
-                  className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 shadow-lg"
-                >
-                  Edit Trip
-                </Link>
-              )}
-            </div>
+            <TripActions
+              tripId={trip.id}
+              tripStatus={trip.status}
+              isOwner={isOwner}
+              currentGroupSize={trip.currentGroupSize}
+              requiredGroupSize={trip.requiredGroupSize}
+            />
           </div>
         </div>
 
@@ -205,49 +204,8 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Owner Card */}
-            <div className="rounded-2xl bg-white p-6 shadow-lg">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Trip Organizer</h3>
-              <div className="flex items-center space-x-4">
-                {trip.owner.avatarUrl ? (
-                  <img
-                    src={trip.owner.avatarUrl}
-                    alt={trip.owner.name || 'User'}
-                    className="h-16 w-16 rounded-full object-cover ring-4 ring-gray-100"
-                  />
-                ) : (
-                  <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center ring-4 ring-gray-100">
-                    <span className="text-2xl font-bold text-white">
-                      {trip.owner.name?.[0]?.toUpperCase() || 'U'}
-                    </span>
-                  </div>
-                )}
-                <div>
-                  <p className="font-semibold text-gray-900">{trip.owner.name}</p>
-                  <p className="text-sm text-gray-500">{trip.owner.email}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 p-6 text-white shadow-lg">
-              <h3 className="text-lg font-bold mb-4">Quick Stats</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-blue-100">Created</span>
-                  <span className="font-semibold">{format(new Date(trip.createdAt), 'MMM d, yyyy')}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-blue-100">Status</span>
-                  <span className="font-semibold">{trip.status}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-blue-100">Spots Available</span>
-                  <span className="font-semibold">{trip.requiredGroupSize - trip.currentGroupSize}</span>
-                </div>
-              </div>
-            </div>
+          <div className="lg:col-span-1">
+            <TripSidebar trip={trip} isOwner={isOwner} />
           </div>
         </div>
       </div>

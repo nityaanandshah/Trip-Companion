@@ -23,6 +23,9 @@ export default function Navbar() {
     if (path === '/bookmarks') {
       return pathname === '/bookmarks';
     }
+    if (path === '/notifications') {
+      return pathname === '/notifications';
+    }
     return false;
   };
 
@@ -103,9 +106,17 @@ export default function Navbar() {
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                   <span className="sr-only">Open user menu</span>
-                  <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
-                    {session?.user?.name?.[0]?.toUpperCase() || 'U'}
-                  </div>
+                  {session?.user?.image ? (
+                    <img
+                      src={session.user.image}
+                      alt={session.user.name || 'User'}
+                      className="h-8 w-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
+                      {session?.user?.name?.[0]?.toUpperCase() || 'U'}
+                    </div>
+                  )}
                 </button>
               </div>
 
@@ -255,9 +266,17 @@ export default function Navbar() {
           <div className="border-t border-gray-200 pb-3 pt-4">
             <div className="flex items-center px-4">
               <div className="flex-shrink-0">
-                <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
-                  {session?.user?.name?.[0]?.toUpperCase() || 'U'}
-                </div>
+                {session?.user?.image ? (
+                  <img
+                    src={session.user.image}
+                    alt={session.user.name || 'User'}
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
+                    {session?.user?.name?.[0]?.toUpperCase() || 'U'}
+                  </div>
+                )}
               </div>
               <div className="ml-3">
                 <div className="text-base font-medium text-gray-800">
