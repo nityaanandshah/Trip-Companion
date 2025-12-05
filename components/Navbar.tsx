@@ -2,11 +2,29 @@
 
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const isActive = (path: string) => {
+    if (path === '/dashboard') {
+      return pathname === '/dashboard';
+    }
+    if (path === '/trips') {
+      return pathname === '/trips';
+    }
+    if (path === '/trips/my-trips') {
+      return pathname === '/trips/my-trips';
+    }
+    if (path === '/bookmarks') {
+      return pathname === '/bookmarks';
+    }
+    return false;
+  };
 
   const handleSignOut = async () => {
     await signOut({ callbackUrl: '/auth/login' });
@@ -26,25 +44,41 @@ export default function Navbar() {
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <Link
                 href="/dashboard"
-                className="inline-flex items-center border-b-2 border-blue-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors ${
+                  isActive('/dashboard')
+                    ? 'border-purple-500 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                }`}
               >
                 Dashboard
               </Link>
               <Link
                 href="/trips"
-                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors ${
+                  isActive('/trips')
+                    ? 'border-purple-500 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                }`}
               >
                 Browse Trips
               </Link>
               <Link
                 href="/trips/my-trips"
-                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors ${
+                  isActive('/trips/my-trips')
+                    ? 'border-purple-500 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                }`}
               >
                 My Trips
               </Link>
               <Link
                 href="/bookmarks"
-                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors ${
+                  isActive('/bookmarks')
+                    ? 'border-purple-500 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                }`}
               >
                 Bookmarks
               </Link>
@@ -175,28 +209,44 @@ export default function Navbar() {
           <div className="space-y-1 pb-3 pt-2">
             <Link
               href="/dashboard"
-              className="block border-l-4 border-blue-500 bg-blue-50 py-2 pl-3 pr-4 text-base font-medium text-blue-700"
+              className={`block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${
+                isActive('/dashboard')
+                  ? 'border-purple-500 bg-purple-50 text-purple-700'
+                  : 'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               Dashboard
             </Link>
             <Link
               href="/trips"
-              className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+              className={`block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${
+                isActive('/trips')
+                  ? 'border-purple-500 bg-purple-50 text-purple-700'
+                  : 'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               Browse Trips
             </Link>
             <Link
               href="/trips/my-trips"
-              className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+              className={`block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${
+                isActive('/trips/my-trips')
+                  ? 'border-purple-500 bg-purple-50 text-purple-700'
+                  : 'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               My Trips
             </Link>
             <Link
               href="/bookmarks"
-              className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+              className={`block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${
+                isActive('/bookmarks')
+                  ? 'border-purple-500 bg-purple-50 text-purple-700'
+                  : 'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               Bookmarks
@@ -246,6 +296,8 @@ export default function Navbar() {
     </nav>
   );
 }
+
+
 
 
 
