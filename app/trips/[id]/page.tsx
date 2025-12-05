@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import Navbar from '@/components/Navbar';
+import BookmarkButton from '@/components/BookmarkButton';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
@@ -87,14 +88,17 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
                 )}
               </div>
             </div>
-            {isOwner && (
-              <Link
-                href={`/trips/${trip.id}/edit`}
-                className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 shadow-lg"
-              >
-                Edit Trip
-              </Link>
-            )}
+            <div className="flex items-center gap-3">
+              <BookmarkButton tripId={trip.id} size="lg" showLabel />
+              {isOwner && (
+                <Link
+                  href={`/trips/${trip.id}/edit`}
+                  className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 shadow-lg"
+                >
+                  Edit Trip
+                </Link>
+              )}
+            </div>
           </div>
         </div>
 

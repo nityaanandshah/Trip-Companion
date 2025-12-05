@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
+import BookmarkButton from '@/components/BookmarkButton';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
@@ -316,30 +317,35 @@ export default function BrowseTripsPage() {
         ) : trips.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {trips.map((trip) => (
-              <Link
+              <div
                 key={trip.id}
-                href={`/trips/${trip.id}`}
                 className="group overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1"
               >
                 {/* Trip Image */}
-                <div className="aspect-video overflow-hidden bg-gradient-to-br from-blue-100 to-purple-100">
-                  {trip.images.length > 0 ? (
-                    <img
-                      src={trip.images[0].imageUrl}
-                      alt={trip.title}
-                      className="h-full w-full object-cover group-hover:scale-110 transition-transform"
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center">
-                      <svg className="h-16 w-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                  )}
+                <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-blue-100 to-purple-100">
+                  <Link href={`/trips/${trip.id}`}>
+                    {trip.images.length > 0 ? (
+                      <img
+                        src={trip.images[0].imageUrl}
+                        alt={trip.title}
+                        className="h-full w-full object-cover group-hover:scale-110 transition-transform"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <svg className="h-16 w-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    )}
+                  </Link>
+                  {/* Bookmark Button */}
+                  <div className="absolute top-3 right-3 z-10">
+                    <BookmarkButton tripId={trip.id} size="md" />
+                  </div>
                 </div>
 
                 {/* Trip Info */}
-                <div className="p-6">
+                <Link href={`/trips/${trip.id}`} className="block p-6">
                   {/* Badges */}
                   <div className="mb-3 flex items-center gap-2 flex-wrap">
                     <span className="inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">
@@ -418,8 +424,8 @@ export default function BrowseTripsPage() {
                       </span>
                     </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         ) : (

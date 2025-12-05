@@ -74,12 +74,30 @@ export async function PUT(
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
+    // Prepare update data with proper type handling
+    const updateData: any = {};
+    
+    if (body.title !== undefined) updateData.title = body.title;
+    if (body.destination !== undefined) updateData.destination = body.destination;
+    if (body.description !== undefined) updateData.description = body.description;
+    if (body.isTentative !== undefined) updateData.isTentative = body.isTentative;
+    if (body.budgetMin !== undefined) updateData.budgetMin = body.budgetMin;
+    if (body.budgetMax !== undefined) updateData.budgetMax = body.budgetMax;
+    if (body.requiredGroupSize !== undefined) updateData.requiredGroupSize = body.requiredGroupSize;
+    if (body.status !== undefined) updateData.status = body.status;
+    
+    // Handle dates - convert strings to Date objects
+    if (body.startDate) {
+      updateData.startDate = new Date(body.startDate);
+    }
+    if (body.endDate) {
+      updateData.endDate = new Date(body.endDate);
+    }
+
     // Update trip
     const trip = await prisma.trip.update({
       where: { id },
-      data: {
-        ...body,
-      },
+      data: updateData,
       include: {
         owner: {
           select: {
