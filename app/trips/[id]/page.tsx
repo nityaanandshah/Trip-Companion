@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import TripSidebar from '@/components/TripSidebar';
 import TripStatusBadges from '@/components/TripStatusBadges';
 import TripActions from '@/components/TripActions';
+import TripChatWrapper from '@/components/TripChatWrapper';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
@@ -55,6 +56,18 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
   }
 
   const isOwner = trip.ownerId === session.user.id;
+
+  // Check if user is approved attendee
+  const attendeeRecord = await prisma.tripAttendee.findUnique({
+    where: {
+      tripId_userId: {
+        tripId: id,
+        userId: session.user.id,
+      },
+    },
+  });
+
+  const isApprovedMember = isOwner || attendeeRecord?.status === 'approved';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -208,6 +221,13 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
             <TripSidebar trip={trip} isOwner={isOwner} />
           </div>
         </div>
+
+        {/* Trip Chat */}
+        <TripChatWrapper
+          tripId={trip.id}
+          tripTitle={trip.title}
+          isApprovedMember={isApprovedMember}
+        />
       </div>
     </div>
   );

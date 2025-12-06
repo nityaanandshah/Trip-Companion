@@ -19,6 +19,7 @@ interface ChatMessage {
 interface OnlineUser {
   userId: string;
   userName: string;
+  avatarUrl?: string | null;
 }
 
 interface TypingUser {
@@ -57,6 +58,19 @@ export const useTripChat = ({ tripId, enabled = true }: UseTripChatOptions): Use
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const hasJoinedRef = useRef(false);
 
+  // Mark chat as read
+  const markAsRead = useCallback(async () => {
+    if (!tripId) return;
+
+    try {
+      await fetch(`/api/chat/${tripId}/mark-read`, {
+        method: 'POST',
+      });
+    } catch (err) {
+      console.error('Error marking chat as read:', err);
+    }
+  }, [tripId]);
+
   // Fetch message history from API
   const fetchMessages = useCallback(async () => {
     if (!tripId) return;
@@ -74,13 +88,16 @@ export const useTripChat = ({ tripId, enabled = true }: UseTripChatOptions): Use
 
       const data = await response.json();
       setMessages(data);
+      
+      // Mark as read after fetching messages
+      markAsRead();
     } catch (err: any) {
       console.error('Error fetching messages:', err);
       setError(err.message || 'Failed to load messages');
     } finally {
       setIsLoading(false);
     }
-  }, [tripId]);
+  }, [tripId, markAsRead]);
 
   // Join trip chat room
   useEffect(() => {
@@ -123,6 +140,11 @@ export const useTripChat = ({ tripId, enabled = true }: UseTripChatOptions): Use
       if (message.tripId === tripId) {
         console.log('📩 New message:', message);
         setMessages((prev) => [...prev, message]);
+        
+        // Mark as read if message is from someone else (we're viewing the chat)
+        if (message.user.id !== session?.user?.id) {
+          markAsRead();
+        }
       }
     };
 
@@ -182,7 +204,7 @@ export const useTripChat = ({ tripId, enabled = true }: UseTripChatOptions): Use
       socket.off('user-typing', handleUserTyping);
       socket.off('error', handleError);
     };
-  }, [socket, tripId, enabled, session?.user?.id]);
+  }, [socket, tripId, enabled, session?.user?.id, markAsRead]);
 
   // Send message
   const sendMessage = useCallback(async (content: string) => {

@@ -40,9 +40,15 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
       return;
     }
 
+    // Prevent duplicate connections
+    if (socket?.connected) {
+      console.log('✅ Socket already connected, reusing existing connection');
+      return;
+    }
+
     setIsConnecting(true);
 
-    // Initialize socket connection
+    // Initialize socket connection with forceNew to prevent duplicates
     const socketInstance = io(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000', {
       auth: {
         userId: session.user.id,
@@ -53,6 +59,8 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
       reconnectionAttempts: 5,
+      forceNew: false, // Reuse existing connection if possible
+      multiplex: true, // Share connection across multiple Socket instances
     });
 
     // Connection event handlers

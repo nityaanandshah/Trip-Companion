@@ -222,6 +222,10 @@ export default function NotificationsPage() {
                   // For join requests, we need to get the tripId from the attendee
                   return null; // Will handle with API call
                 }
+                if (notification.type === 'new_chat_message') {
+                  // For chat messages, referenceId is the tripId, add openChat param
+                  return notification.referenceId ? `/trips/${notification.referenceId}?openChat=true` : null;
+                }
                 return notification.referenceId ? `/trips/${notification.referenceId}` : null;
               };
 
@@ -251,12 +255,14 @@ export default function NotificationsPage() {
                         notification.type === 'request_approved' ? 'bg-green-100' :
                         notification.type === 'request_rejected' ? 'bg-red-100' :
                         notification.type === 'trip_full' ? 'bg-amber-100' :
+                        notification.type === 'new_chat_message' ? 'bg-purple-100' :
                         'bg-gray-100'
                       }`}>
                         {notification.type === 'join_request' && <span className="text-xl">🤝</span>}
                         {notification.type === 'request_approved' && <span className="text-xl">✅</span>}
                         {notification.type === 'request_rejected' && <span className="text-xl">❌</span>}
                         {notification.type === 'trip_full' && <span className="text-xl">🎉</span>}
+                        {notification.type === 'new_chat_message' && <span className="text-xl">💬</span>}
                       </div>
                       
                       {!notification.read && (
@@ -340,11 +346,11 @@ export default function NotificationsPage() {
                       </>
                     )}
 
-                    {/* Link to trip for approved/rejected/full */}
-                    {(notification.type === 'request_approved' || notification.type === 'request_rejected' || notification.type === 'trip_full') && notification.referenceId && (
+                    {/* Link to trip for approved/rejected/full/chat */}
+                    {(notification.type === 'request_approved' || notification.type === 'request_rejected' || notification.type === 'trip_full' || notification.type === 'new_chat_message') && notification.referenceId && (
                       <div className="mt-4">
                         <span className="inline-flex items-center text-sm font-medium text-gray-500">
-                          💡 Click card to view trip in My Trips
+                          💡 Click card to view trip{notification.type === 'new_chat_message' ? ' and open chat' : ' in My Trips'}
                         </span>
                       </div>
                     )}

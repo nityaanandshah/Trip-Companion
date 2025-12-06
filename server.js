@@ -14,7 +14,8 @@ const handle = app.getRequestHandler();
 const prisma = new PrismaClient();
 
 // Store connected users per trip
-const tripRooms = new Map(); // tripId -> Set of { socketId, userId, userName }
+// tripId -> Map of userId -> { socketId, userName }
+const tripRooms = new Map();
 
 app.prepare().then(() => {
   const httpServer = createServer(async (req, res) => {
@@ -46,8 +47,15 @@ app.prepare().then(() => {
         return next(new Error('Authentication error'));
       }
 
+      // Fetch user details including avatar
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { id: true, name: true, avatarUrl: true },
+      });
+
       socket.userId = userId;
-      socket.userName = userName || 'Anonymous';
+      socket.userName = user?.name || userName || 'Anonymous';
+      socket.userAvatarUrl = user?.avatarUrl || null;
       next();
     } catch (error) {
       next(new Error('Authentication error'));
@@ -91,20 +99,22 @@ app.prepare().then(() => {
         socket.join(tripId);
         socket.currentTripId = tripId;
 
-        // Track online user
+        // Track online user (use Map to prevent duplicates by userId)
         if (!tripRooms.has(tripId)) {
-          tripRooms.set(tripId, new Set());
+          tripRooms.set(tripId, new Map());
         }
-        tripRooms.get(tripId).add({
+        // If user already exists, update their socket ID (handles reconnections)
+        tripRooms.get(tripId).set(socket.userId, {
           socketId: socket.id,
-          userId: socket.userId,
           userName: socket.userName,
+          avatarUrl: socket.userAvatarUrl,
         });
 
-        // Get online users for this trip
-        const onlineUsers = Array.from(tripRooms.get(tripId) || []).map((user) => ({
-          userId: user.userId,
+        // Get online users for this trip (now deduplicated by userId)
+        const onlineUsers = Array.from(tripRooms.get(tripId).entries()).map(([userId, user]) => ({
+          userId,
           userName: user.userName,
+          avatarUrl: user.avatarUrl,
         }));
 
         // Notify user they joined
@@ -128,20 +138,18 @@ app.prepare().then(() => {
     socket.on('leave-trip-chat', ({ tripId }) => {
       socket.leave(tripId);
       
-      // Remove from online users
+      // Remove from online users (by userId)
       if (tripRooms.has(tripId)) {
-        const users = tripRooms.get(tripId);
-        const updatedUsers = Array.from(users).filter((u) => u.socketId !== socket.id);
+        const usersMap = tripRooms.get(tripId);
+        usersMap.delete(socket.userId);
         
-        if (updatedUsers.length > 0) {
-          tripRooms.set(tripId, new Set(updatedUsers));
-        } else {
+        if (usersMap.size === 0) {
           tripRooms.delete(tripId);
         }
 
         // Get updated online users
-        const onlineUsers = updatedUsers.map((user) => ({
-          userId: user.userId,
+        const onlineUsers = Array.from(usersMap.entries()).map(([userId, user]) => ({
+          userId,
           userName: user.userName,
         }));
 
@@ -227,7 +235,67 @@ app.prepare().then(() => {
           },
         });
 
-        console.log(`Message sent in trip ${tripId} by ${socket.userName}`);
+        // Create notifications for users NOT currently in the chat room
+        // Get all approved members + owner
+        const allApprovedAttendees = await prisma.tripAttendee.findMany({
+          where: {
+            tripId,
+            status: 'approved',
+          },
+          select: { userId: true },
+        });
+
+        const allMemberIds = [
+          trip.ownerId,
+          ...allApprovedAttendees.map(a => a.userId),
+        ];
+
+        // Get users currently in the chat room
+        const onlineUserIds = tripRooms.has(tripId)
+          ? Array.from(tripRooms.get(tripId).keys())
+          : [];
+
+        // Find users who are NOT in the chat (offline or online but not viewing this chat)
+        const offlineUserIds = allMemberIds.filter(
+          uid => uid !== socket.userId && !onlineUserIds.includes(uid)
+        );
+
+        console.log(`💬 Message sent in trip ${tripId} by ${socket.userName}`);
+        console.log(`   All members: ${allMemberIds.length} users`);
+        console.log(`   Online in chat: ${onlineUserIds.length} users (${onlineUserIds.join(', ') || 'none'})`);
+        console.log(`   Need notifications: ${offlineUserIds.length} users (${offlineUserIds.join(', ') || 'none'})`);
+
+        // Create notifications for offline users
+        // Only create ONE notification per trip per user (don't spam with multiple notifications)
+        if (offlineUserIds.length > 0) {
+          for (const userId of offlineUserIds) {
+            // Check if user already has an unread notification for this trip
+            const existingNotification = await prisma.notification.findFirst({
+              where: {
+                userId,
+                type: 'new_chat_message',
+                referenceId: tripId,
+                read: false,
+              },
+            });
+
+            // Only create notification if one doesn't already exist
+            if (!existingNotification) {
+              await prisma.notification.create({
+                data: {
+                  userId,
+                  type: 'new_chat_message',
+                  referenceId: tripId,
+                  message: `You have new messages from "${trip.title}"`,
+                  read: false,
+                },
+              });
+            }
+          }
+          console.log(`   ✅ Checked/created notifications for ${offlineUserIds.length} offline users`);
+        } else {
+          console.log(`   ⚠️ No notifications created - all users are online in chat`);
+        }
       } catch (error) {
         console.error('Error sending message:', error);
         socket.emit('error', { message: 'Failed to send message' });
@@ -247,23 +315,21 @@ app.prepare().then(() => {
     socket.on('disconnect', () => {
       console.log(`User disconnected: ${socket.userId} (${socket.userName})`);
 
-      // Remove from all trip rooms
+      // Remove from all trip rooms (by userId)
       if (socket.currentTripId) {
         const tripId = socket.currentTripId;
         
         if (tripRooms.has(tripId)) {
-          const users = tripRooms.get(tripId);
-          const updatedUsers = Array.from(users).filter((u) => u.socketId !== socket.id);
+          const usersMap = tripRooms.get(tripId);
+          usersMap.delete(socket.userId);
           
-          if (updatedUsers.length > 0) {
-            tripRooms.set(tripId, new Set(updatedUsers));
-          } else {
+          if (usersMap.size === 0) {
             tripRooms.delete(tripId);
           }
 
           // Get updated online users
-          const onlineUsers = updatedUsers.map((user) => ({
-            userId: user.userId,
+          const onlineUsers = Array.from(usersMap.entries()).map(([userId, user]) => ({
+            userId,
             userName: user.userName,
           }));
 
