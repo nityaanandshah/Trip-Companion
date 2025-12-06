@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import SessionProvider from '@/components/providers/SessionProvider';
+import { SocketProvider } from '@/lib/socket-context';
 
 export const metadata: Metadata = {
   title: 'Trip Companion - Find Your Travel Partners',
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <SocketProvider>{children}</SocketProvider>
+        </SessionProvider>
       </body>
     </html>
   );

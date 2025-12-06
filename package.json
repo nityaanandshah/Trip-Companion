@@ -4,10 +4,11 @@
   "description": "Trip Companion Web App - Find travel companions for your trips",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "NODE_ENV=production node server.js",
+    "lint": "next lint",
+    "prisma": "prisma"
   },
   "keywords": [
     "trips",
@@ -28,6 +29,8 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.68.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "tailwind-merge": "^3.4.0",
     "zod": "^4.1.13"
   },

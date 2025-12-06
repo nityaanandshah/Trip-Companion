@@ -4,6 +4,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import SocketStatus from './SocketStatus';
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -96,6 +97,11 @@ export default function Navbar() {
             >
               Create Trip
             </Link>
+
+            {/* Socket connection status */}
+            <div className="mr-3">
+              <SocketStatus position="inline" showLabel={false} />
+            </div>
 
             {/* Profile dropdown */}
             <div className="relative ml-3">

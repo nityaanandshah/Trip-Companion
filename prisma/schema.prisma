@@ -49,11 +49,11 @@ model Trip {
   updatedAt          DateTime @updatedAt
 
   // Relations
-  owner      User          @relation("TripOwner", fields: [ownerId], references: [id], onDelete: Cascade)
-  images     TripImage[]
-  attendees  TripAttendee[]
-  bookmarks  TripBookmark[]
-  chatRoom   ChatRoom?
+  owner        User           @relation("TripOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  images       TripImage[]
+  attendees    TripAttendee[]
+  bookmarks    TripBookmark[]
+  chatMessages ChatMessage[]
 
   @@map("trips")
 }
@@ -99,27 +99,17 @@ model TripBookmark {
   @@map("trip_bookmarks")
 }
 
-model ChatRoom {
-  id        String   @id @default(cuid())
-  tripId    String   @unique
-  createdAt DateTime @default(now())
-
-  trip     Trip          @relation(fields: [tripId], references: [id], onDelete: Cascade)
-  messages ChatMessage[]
-
-  @@map("chat_rooms")
-}
-
 model ChatMessage {
   id        String   @id @default(cuid())
-  roomId    String
-  senderId  String
-  content   String
+  tripId    String
+  userId    String
+  content   String   @db.Text
   createdAt DateTime @default(now())
 
-  room   ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  sender User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([tripId, createdAt])
   @@map("chat_messages")
 }
 
