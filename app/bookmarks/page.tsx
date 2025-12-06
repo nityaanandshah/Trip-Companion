@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import BookmarkButton from '@/components/BookmarkButton';
+import EmptyState from '@/components/EmptyState';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
@@ -223,23 +224,13 @@ export default function BookmarksPage() {
             ))}
           </div>
         ) : (
-          <div className="rounded-2xl bg-white p-16 text-center shadow-lg">
-            <div className="mx-auto w-24 h-24 rounded-full bg-gradient-to-br from-red-100 to-pink-100 flex items-center justify-center mb-6">
-              <svg className="h-12 w-12 text-red-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900">No Bookmarks Yet</h2>
-            <p className="mt-3 text-gray-600 max-w-md mx-auto">
-              You haven't bookmarked any trips yet. Browse trips and click the heart icon to save ones you're interested in!
-            </p>
-            <Link
-              href="/trips"
-              className="mt-8 inline-block rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
-            >
-              Browse Trips
-            </Link>
-          </div>
+          <EmptyState
+            icon="❤️"
+            title="No Bookmarks Yet"
+            description="You haven't bookmarked any trips yet. Browse trips and click the heart icon to save ones you're interested in!"
+            actionLabel="Browse Trips"
+            actionHref="/trips"
+          />
         )}
       </div>
     </div>

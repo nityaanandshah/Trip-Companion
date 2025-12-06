@@ -125,7 +125,7 @@ Trips/
 
 ---
 
-## 🗄️ Database Schema
+## Database Schema
 
 ### Implemented Tables:
 
@@ -140,7 +140,7 @@ Trips/
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - **Framework**: Next.js 14+ (App Router)
@@ -163,37 +163,27 @@ Trips/
 
 ---
 
-## 📚 Documentation
+## Roadmap
 
-- **[NEXT_STEPS.md](./NEXT_STEPS.md)** - What to do next
-- **[WEEK1_COMPLETE.md](./WEEK1_COMPLETE.md)** - Week 1 summary
-- **[CLOUDINARY_SETUP.md](./CLOUDINARY_SETUP.md)** - Image upload setup
-- **[IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md)** - Full 4-week plan
-- **[SETUP_STATUS.md](./SETUP_STATUS.md)** - Original setup notes
-
----
-
-## 🎯 Roadmap
-
-### ✅ Week 1: Authentication & User Profiles (COMPLETE)
+### Week 1: Authentication & User Profiles (COMPLETE)
 - User registration and login
 - Profile management
 - Avatar uploads
 - Dashboard
 
-### 📅 Week 2: Trip Creation & Discovery (Next)
+### Week 2: Trip Creation & Discovery (Next)
 - Trip creation form
 - Mood board images
 - Trip display pages
 - Browse and filter trips
 
-### 📅 Week 3: Social Features
+### Week 3: Social Features
 - Bookmark trips
 - Join requests
 - Approve/reject workflow
 - In-app notifications
 
-### 📅 Week 4: Real-time Chat & Deployment
+### Week 4: Real-time Chat & Deployment
 - Trip group chat
 - Real-time messaging
 - Polish and bug fixes
@@ -201,44 +191,7 @@ Trips/
 
 ---
 
-## 🧪 Testing
-
-### Manual Testing Checklist
-
-Week 1 Features:
-- [ ] Register a new user
-- [ ] Login with credentials
-- [ ] View dashboard
-- [ ] Navigate to profile
-- [ ] Edit profile information
-- [ ] Update bio
-- [ ] Upload avatar (if Cloudinary configured)
-- [ ] Test all navigation links
-- [ ] Sign out
-- [ ] Login again
-
----
-
-## 🌐 Available Routes
-
-### Public Routes
-- `/` - Home page
-- `/auth/login` - Login page
-- `/auth/register` - Registration page
-
-### Protected Routes (Require Login)
-- `/dashboard` - User dashboard ✅
-- `/profile` - View profile ✅
-- `/profile/edit` - Edit profile ✅
-- `/trips` - Browse trips (coming Week 2)
-- `/trips/create` - Create trip (coming Week 2)
-- `/trips/my-trips` - My trips (coming Week 2)
-- `/bookmarks` - Bookmarked trips (coming Week 3)
-- `/notifications` - Notifications (coming Week 3)
-
----
-
-## 🚀 Deployment
+## Deployment
 
 **Planned Deployment Stack:**
 - **Frontend**: Vercel (free tier)
@@ -248,39 +201,14 @@ Week 1 Features:
 
 ---
 
-## 📝 Environment Variables
-
-### Required Now:
-```bash
-DATABASE_URL          # PostgreSQL connection string
-NEXTAUTH_SECRET       # Random secret for JWT
-NEXTAUTH_URL          # App URL (http://localhost:3000)
-```
-
-### Required for Image Uploads:
-```bash
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME  # Cloudinary cloud name
-CLOUDINARY_API_KEY                 # Cloudinary API key
-CLOUDINARY_API_SECRET              # Cloudinary API secret
-```
-
----
-
 ## 🤝 Contributing
 
 This is a learning project following a 4-week MVP timeline. 
 
 ---
 
-## 📄 License
+## Built with:
 
-ISC
-
----
-
-## 🎉 Acknowledgments
-
-Built with:
 - Next.js 14
 - NextAuth.js v5
 - Prisma ORM
@@ -289,9 +217,3 @@ Built with:
 - Supabase
 
 ---
-
-**Current Status**: Week 1 Complete! 🎊  
-**Next Up**: Trip Creation & Discovery  
-**Goal**: 4-Week MVP
-
-Let's build something amazing! 🚀

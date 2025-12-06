@@ -4,10 +4,10 @@ import { prisma } from '@/lib/prisma';
 // GET /api/users/[userId] - Get public user profile
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
-    const { userId } = params;
+    const { userId } = await params;
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -49,7 +49,7 @@ export async function GET(
             },
           },
           orderBy: {
-            approvedAt: 'desc',
+            respondedAt: 'desc',
           },
         },
       },

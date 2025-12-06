@@ -29,6 +29,78 @@ export default async function DashboardPage() {
     },
   });
 
+  // Get recent activities
+  const recentTrips = await prisma.trip.findMany({
+    where: { ownerId: session.user.id },
+    orderBy: { createdAt: 'desc' },
+    take: 3,
+    select: {
+      id: true,
+      title: true,
+      destination: true,
+      createdAt: true,
+    },
+  });
+
+  const recentBookmarks = await prisma.tripBookmark.findMany({
+    where: { userId: session.user.id },
+    orderBy: { createdAt: 'desc' },
+    take: 3,
+    include: {
+      trip: {
+        select: {
+          id: true,
+          title: true,
+          destination: true,
+        },
+      },
+    },
+  });
+
+  const recentJoined = await prisma.tripAttendee.findMany({
+    where: {
+      userId: session.user.id,
+      status: 'approved',
+    },
+    orderBy: { respondedAt: 'desc' },
+    take: 3,
+    include: {
+      trip: {
+        select: {
+          id: true,
+          title: true,
+          destination: true,
+        },
+      },
+    },
+  });
+
+  // Combine and sort activities
+  const activities = [
+    ...recentTrips.map((trip) => ({
+      type: 'trip_created' as const,
+      date: trip.createdAt,
+      tripId: trip.id,
+      tripTitle: trip.title,
+      tripDestination: trip.destination,
+    })),
+    ...recentBookmarks.map((bookmark) => ({
+      type: 'bookmarked' as const,
+      date: bookmark.createdAt,
+      tripId: bookmark.trip.id,
+      tripTitle: bookmark.trip.title,
+      tripDestination: bookmark.trip.destination,
+    })),
+    ...recentJoined.map((attendee) => ({
+      type: 'joined_trip' as const,
+      date: attendee.respondedAt!,
+      tripId: attendee.trip.id,
+      tripTitle: attendee.trip.title,
+      tripDestination: attendee.trip.destination,
+    })),
+  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 8);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <Navbar />
@@ -212,17 +284,80 @@ export default async function DashboardPage() {
             </svg>
             Recent Activity
           </h2>
-          <div className="text-center py-16">
-            <div className="mx-auto w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-              <svg className="h-10 w-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-              </svg>
+          {activities.length > 0 ? (
+            <div className="space-y-4">
+              {activities.map((activity, index) => {
+                const activityIcons = {
+                  trip_created: (
+                    <div className="flex-shrink-0 rounded-full bg-blue-100 p-2">
+                      <svg className="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                    </div>
+                  ),
+                  bookmarked: (
+                    <div className="flex-shrink-0 rounded-full bg-amber-100 p-2">
+                      <svg className="h-5 w-5 text-amber-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                      </svg>
+                    </div>
+                  ),
+                  joined_trip: (
+                    <div className="flex-shrink-0 rounded-full bg-green-100 p-2">
+                      <svg className="h-5 w-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                  ),
+                };
+
+                const activityText = {
+                  trip_created: `Created trip to ${activity.tripDestination}`,
+                  bookmarked: `Bookmarked ${activity.tripTitle}`,
+                  joined_trip: `Joined ${activity.tripTitle}`,
+                };
+
+                const timeAgo = new Date(activity.date).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: new Date(activity.date).getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined,
+                });
+
+                return (
+                  <Link
+                    key={`${activity.type}-${activity.tripId}-${index}`}
+                    href={`/trips/${activity.tripId}`}
+                    className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors border border-gray-100"
+                  >
+                    {activityIcons[activity.type]}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900">
+                        {activityText[activity.type]}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {timeAgo}
+                      </p>
+                    </div>
+                    <svg className="h-5 w-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                );
+              })}
             </div>
-            <p className="text-lg font-medium text-gray-600">No recent activity</p>
-            <p className="text-sm text-gray-400 mt-2 max-w-md mx-auto">
-              Start by creating your first trip or browsing available trips to see your activity here
-            </p>
-          </div>
+          ) : (
+            <div className="text-center py-16">
+              <div className="mx-auto w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+                <svg className="h-10 w-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                </svg>
+              </div>
+              <p className="text-lg font-medium text-gray-600">No recent activity</p>
+              <p className="text-sm text-gray-400 mt-2 max-w-md mx-auto">
+                Start by creating your first trip or browsing available trips to see your activity here
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

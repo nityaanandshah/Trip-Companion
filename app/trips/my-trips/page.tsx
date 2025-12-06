@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import ConfirmModal from '@/components/ConfirmModal';
+import EmptyState from '@/components/EmptyState';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
@@ -325,25 +326,17 @@ export default function MyTripsPage() {
             ))}
           </div>
         ) : (
-          <div className="rounded-2xl bg-white p-16 text-center shadow-lg">
-            <div className="mx-auto w-24 h-24 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center mb-6">
-              <svg className="h-12 w-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-              </svg>
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900">No {filter !== 'all' ? filter : ''} Trips Yet</h2>
-            <p className="mt-3 text-gray-600 max-w-md mx-auto">
-              {filter === 'all' 
+          <EmptyState
+            icon="✈️"
+            title={`No ${filter !== 'all' ? filter : ''} Trips Yet`}
+            description={
+              filter === 'all' 
                 ? "You haven't created any trips yet. Start planning your next adventure!"
-                : `You don't have any ${filter} trips. Try changing the filter or create a new trip.`}
-            </p>
-            <Link
-              href="/trips/create"
-              className="mt-8 inline-block rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
-            >
-              Create Your First Trip
-            </Link>
-          </div>
+                : `You don't have any ${filter} trips. Try changing the filter or create a new trip.`
+            }
+            actionLabel="Create Your First Trip"
+            actionHref="/trips/create"
+          />
         )}
       </div>
 

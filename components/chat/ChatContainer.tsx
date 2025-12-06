@@ -45,11 +45,13 @@ export default function ChatContainer({ tripId, tripTitle, onClose }: ChatContai
 
   return (
     <div
-      className={`fixed bottom-4 right-4 z-40 transition-all duration-300 ${
-        isExpanded ? 'w-[800px] h-[600px]' : 'w-96 h-[500px]'
+      className={`fixed bottom-0 right-0 sm:bottom-4 sm:right-4 z-40 transition-all duration-300 ${
+        isExpanded 
+          ? 'w-full h-full sm:w-[800px] sm:h-[600px] sm:rounded-2xl' 
+          : 'w-full h-[500px] sm:w-96 sm:h-[500px] sm:rounded-2xl'
       }`}
     >
-      <div className="flex h-full flex-col rounded-2xl bg-white shadow-2xl border-2 border-gray-200 overflow-hidden">
+      <div className="flex h-full flex-col rounded-t-2xl sm:rounded-2xl bg-white shadow-2xl border-2 border-gray-200 overflow-hidden">
         {/* Header */}
         <div className="flex flex-col rounded-t-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-3 text-white">
           {/* Top row: Icon, Title, Controls */}
