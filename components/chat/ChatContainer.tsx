@@ -45,19 +45,42 @@ export default function ChatContainer({ tripId, tripTitle, onClose }: ChatContai
 
   return (
     <div
-      className={`fixed bottom-0 right-0 sm:bottom-4 sm:right-4 z-40 transition-all duration-300 ${
-        isExpanded 
-          ? 'w-full h-full sm:w-[800px] sm:h-[600px] sm:rounded-2xl' 
-          : 'w-full h-[500px] sm:w-96 sm:h-[500px] sm:rounded-2xl'
-      }`}
+      className="fixed bottom-0 right-0 sm:bottom-4 sm:right-4 z-40 transition-all duration-300"
+      style={{
+        width: isExpanded ? '100%' : '100%',
+        height: isExpanded ? '100%' : '500px',
+        ...(typeof window !== 'undefined' && window.innerWidth >= 640 && {
+          width: isExpanded ? '800px' : '384px',
+          height: isExpanded ? '600px' : '500px',
+          borderRadius: '2px'
+        })
+      }}
     >
-      <div className="flex h-full flex-col rounded-t-2xl sm:rounded-2xl bg-white shadow-2xl border-2 border-gray-200 overflow-hidden">
+      <div 
+        className="flex h-full flex-col overflow-hidden" 
+        style={{ 
+          backgroundColor: 'white', 
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          border: '2px solid #d4c7ad',
+          borderRadius: '2px'
+        }}
+      >
         {/* Header */}
-        <div className="flex flex-col rounded-t-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-3 text-white">
+        <div 
+          className="flex flex-col px-4 py-3 text-white" 
+          style={{ 
+            backgroundColor: '#C76D45',
+            borderTopLeftRadius: '2px',
+            borderTopRightRadius: '2px'
+          }}
+        >
           {/* Top row: Icon, Title, Controls */}
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-3">
-              <div className="flex-shrink-0 rounded-lg bg-white/10 p-2">
+              <div 
+                className="flex-shrink-0 p-2" 
+                style={{ borderRadius: '4px', backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+              >
                 <svg
                   className="h-5 w-5"
                   fill="none"
@@ -79,7 +102,10 @@ export default function ChatContainer({ tripId, tripTitle, onClose }: ChatContai
               {/* Expand/Collapse */}
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="rounded-lg p-2 hover:bg-white/15 active:bg-white/25 transition-all"
+                className="p-2 transition-all"
+                style={{ borderRadius: '4px' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                 title={isExpanded ? 'Collapse' : 'Expand'}
               >
                 <svg
@@ -110,7 +136,10 @@ export default function ChatContainer({ tripId, tripTitle, onClose }: ChatContai
               {onClose && (
                 <button
                   onClick={onClose}
-                  className="rounded-lg p-2 hover:bg-red-500/20 active:bg-red-500/30 transition-all"
+                  className="p-2 transition-all"
+                  style={{ borderRadius: '4px' }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                   title="Close Chat"
                 >
                   <svg
@@ -167,15 +196,19 @@ export default function ChatContainer({ tripId, tripTitle, onClose }: ChatContai
                 {isLoading ? (
                   <div className="flex h-full items-center justify-center">
                     <div className="text-center">
-                      <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
-                      <p className="mt-2 text-sm text-gray-600">Loading messages...</p>
+                      <div 
+                        className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" 
+                        style={{ borderColor: '#DAAA63', borderTopColor: 'transparent' }}
+                      />
+                      <p className="mt-2 text-sm" style={{ color: 'rgba(51, 53, 59, 0.7)' }}>Loading messages...</p>
                     </div>
                   </div>
                 ) : error ? (
                   <div className="flex h-full items-center justify-center p-4">
                     <div className="text-center">
                       <svg
-                        className="mx-auto h-12 w-12 text-red-500"
+                        className="mx-auto h-12 w-12"
+                        style={{ color: '#C76D45' }}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -187,10 +220,10 @@ export default function ChatContainer({ tripId, tripTitle, onClose }: ChatContai
                           d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                       </svg>
-                      <p className="mt-2 text-sm font-medium text-gray-900">
+                      <p className="mt-2 text-sm font-medium" style={{ color: '#33353B' }}>
                         Unable to load chat
                       </p>
-                      <p className="mt-1 text-xs text-gray-600">{error}</p>
+                      <p className="mt-1 text-xs" style={{ color: 'rgba(51, 53, 59, 0.7)' }}>{error}</p>
                     </div>
                   </div>
                 ) : (
@@ -211,8 +244,14 @@ export default function ChatContainer({ tripId, tripTitle, onClose }: ChatContai
 
             {/* Online Users Sidebar (only in expanded mode) */}
             {isExpanded && (
-              <div className="w-48 border-l border-gray-200 bg-gray-50">
-                <OnlineUsers users={onlineUsers} />
+              <div 
+                className="w-48" 
+                style={{ 
+                  borderLeft: '1px solid #d4c7ad', 
+                  backgroundColor: '#F5EFE3' 
+                }}
+              >
+                <OnlineUsers users={onlineUsers} tripId={tripId} />
               </div>
             )}
           </div>

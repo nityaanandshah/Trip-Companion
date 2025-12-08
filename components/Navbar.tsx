@@ -35,54 +35,122 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <nav style={{ backgroundColor: '#2B5F5E', borderBottom: '1px solid #3a7675' }}>
+      <div className="px-8 sm:px-12 lg:px-16">
         <div className="flex h-16 justify-between">
           {/* Logo and primary navigation */}
           <div className="flex">
             <div className="flex flex-shrink-0 items-center">
-              <Link href="/dashboard" className="text-xl font-bold text-blue-600">
-                Trip Companion
+              <Link href="/dashboard" className="flex items-center gap-3 group">
+                {/* Suitcase Icon */}
+                <svg 
+                  className="h-10 w-10 transition-colors" 
+                  style={{ color: '#F5EFE3' }}
+                  viewBox="0 0 64 64" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2.5"
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#DAAA63'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#F5EFE3'}
+                >
+                  <rect x="12" y="20" width="40" height="28" rx="2" />
+                  <path d="M20 20V16a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v4" />
+                  <path d="M12 28h40M12 36h40" />
+                  <circle cx="32" cy="32" r="3" fill="currentColor" />
+                  <path d="M32 20v8M32 36v12" strokeLinecap="round"/>
+                </svg>
+                <div className="flex flex-col">
+                  <span className="text-xs uppercase tracking-wider font-sans font-medium" style={{ color: 'rgba(245, 239, 227, 0.8)' }}>Finding</span>
+                  <span className="text-xl font-display font-bold -mt-1 leading-none" style={{ color: '#F5EFE3' }}>Travel Buddies</span>
+                </div>
               </Link>
             </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <div className="hidden sm:ml-2 sm:flex sm:space-x-6">
               <Link
                 href="/dashboard"
-                className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors ${
-                  isActive('/dashboard')
-                    ? 'border-purple-500 text-gray-900'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                }`}
+                className="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors"
+                style={{
+                  borderColor: isActive('/dashboard') ? '#DAAA63' : 'transparent',
+                  color: isActive('/dashboard') ? '#F5EFE3' : '#EBDCC4'
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive('/dashboard')) {
+                    e.currentTarget.style.borderColor = '#EBDCC4';
+                    e.currentTarget.style.color = '#F5EFE3';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive('/dashboard')) {
+                    e.currentTarget.style.borderColor = 'transparent';
+                    e.currentTarget.style.color = '#EBDCC4';
+                  }
+                }}
               >
                 Dashboard
               </Link>
               <Link
                 href="/trips"
-                className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors ${
-                  isActive('/trips')
-                    ? 'border-purple-500 text-gray-900'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                }`}
+                className="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors"
+                style={{
+                  borderColor: isActive('/trips') ? '#DAAA63' : 'transparent',
+                  color: isActive('/trips') ? '#F5EFE3' : '#EBDCC4'
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive('/trips')) {
+                    e.currentTarget.style.borderColor = '#EBDCC4';
+                    e.currentTarget.style.color = '#F5EFE3';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive('/trips')) {
+                    e.currentTarget.style.borderColor = 'transparent';
+                    e.currentTarget.style.color = '#EBDCC4';
+                  }
+                }}
               >
                 Browse Trips
               </Link>
               <Link
                 href="/trips/my-trips"
-                className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors ${
-                  isActive('/trips/my-trips')
-                    ? 'border-purple-500 text-gray-900'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                }`}
+                className="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors"
+                style={{
+                  borderColor: isActive('/trips/my-trips') ? '#DAAA63' : 'transparent',
+                  color: isActive('/trips/my-trips') ? '#F5EFE3' : '#EBDCC4'
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive('/trips/my-trips')) {
+                    e.currentTarget.style.borderColor = '#EBDCC4';
+                    e.currentTarget.style.color = '#F5EFE3';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive('/trips/my-trips')) {
+                    e.currentTarget.style.borderColor = 'transparent';
+                    e.currentTarget.style.color = '#EBDCC4';
+                  }
+                }}
               >
                 My Trips
               </Link>
               <Link
                 href="/bookmarks"
-                className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors ${
-                  isActive('/bookmarks')
-                    ? 'border-purple-500 text-gray-900'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                }`}
+                className="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors"
+                style={{
+                  borderColor: isActive('/bookmarks') ? '#DAAA63' : 'transparent',
+                  color: isActive('/bookmarks') ? '#F5EFE3' : '#EBDCC4'
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive('/bookmarks')) {
+                    e.currentTarget.style.borderColor = '#EBDCC4';
+                    e.currentTarget.style.color = '#F5EFE3';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive('/bookmarks')) {
+                    e.currentTarget.style.borderColor = 'transparent';
+                    e.currentTarget.style.color = '#EBDCC4';
+                  }
+                }}
               >
                 Bookmarks
               </Link>
@@ -90,10 +158,16 @@ export default function Navbar() {
           </div>
 
           {/* User menu */}
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
+          <div className="hidden sm:ml-auto sm:flex sm:items-center">
             <Link
               href="/trips/create"
-              className="mr-4 rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              className="mr-4 rounded-sm px-3 py-2 text-sm font-semibold transition-colors"
+              style={{
+                backgroundColor: '#DAAA63',
+                color: '#33353B'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c99547'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#DAAA63'}
             >
               Create Trip
             </Link>
@@ -108,7 +182,11 @@ export default function Navbar() {
               <div>
                 <button
                   type="button"
-                  className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  className="flex rounded-full text-sm focus:outline-none focus:ring-2"
+                  style={{
+                    backgroundColor: '#3a7675',
+                    outlineColor: '#DAAA63'
+                  }}
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                   <span className="sr-only">Open user menu</span>
@@ -119,7 +197,7 @@ export default function Navbar() {
                       className="h-8 w-8 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
+                    <div className="h-8 w-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#C76D45' }}>
                       {session?.user?.name?.[0]?.toUpperCase() || 'U'}
                     </div>
                   )}
@@ -136,39 +214,51 @@ export default function Navbar() {
                   />
                   
                   {/* Menu items */}
-                  <div className="absolute right-0 z-20 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="px-4 py-2 border-b border-gray-200">
-                      <p className="text-sm font-medium text-gray-900">
+                  <div className="absolute right-0 z-20 mt-2 w-48 origin-top-right bg-white py-1 border focus:outline-none" style={{ borderRadius: '2px', borderColor: 'rgba(43, 95, 94, 0.15)' }}>
+                    <div className="px-4 py-2 border-b" style={{ borderColor: 'rgba(43, 95, 94, 0.2)' }}>
+                      <p className="text-sm font-medium" style={{ color: '#33353B' }}>
                         {session?.user?.name || 'User'}
                       </p>
-                      <p className="text-sm text-gray-500 truncate">
+                      <p className="text-sm truncate" style={{ color: 'rgba(51, 53, 59, 0.7)' }}>
                         {session?.user?.email}
                       </p>
                     </div>
                     <Link
                       href="/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm transition-colors"
+                      style={{ color: '#33353B' }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F5EFE3'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Your Profile
                     </Link>
                     <Link
                       href="/trips/my-trips"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm transition-colors"
+                      style={{ color: '#33353B' }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F5EFE3'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       onClick={() => setIsMenuOpen(false)}
                     >
                       My Trips
                     </Link>
                     <Link
                       href="/notifications"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm transition-colors"
+                      style={{ color: '#33353B' }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F5EFE3'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Notifications
                     </Link>
                     <button
                       onClick={handleSignOut}
-                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                      className="block w-full text-left px-4 py-2 text-sm transition-colors"
+                      style={{ color: '#C76D45' }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F5EFE3'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                     >
                       Sign out
                     </button>
@@ -182,7 +272,19 @@ export default function Navbar() {
           <div className="flex items-center sm:hidden">
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+              className="inline-flex items-center justify-center rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-inset transition-colors"
+              style={{ 
+                color: '#EBDCC4',
+                outlineColor: '#DAAA63'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#3a7675';
+                e.currentTarget.style.color = '#F5EFE3';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = '#EBDCC4';
+              }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <span className="sr-only">Open main menu</span>
@@ -222,54 +324,114 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="sm:hidden">
+        <div className="sm:hidden" style={{ backgroundColor: '#3a7675' }}>
           <div className="space-y-1 pb-3 pt-2">
             <Link
               href="/dashboard"
-              className={`block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${
-                isActive('/dashboard')
-                  ? 'border-purple-500 bg-purple-50 text-purple-700'
-                  : 'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'
-              }`}
+              className="block border-l-4 py-2 pl-3 pr-4 text-base font-medium transition-colors"
+              style={{
+                borderColor: isActive('/dashboard') ? '#DAAA63' : 'transparent',
+                backgroundColor: isActive('/dashboard') ? '#2B5F5E' : 'transparent',
+                color: isActive('/dashboard') ? '#F5EFE3' : '#EBDCC4'
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive('/dashboard')) {
+                  e.currentTarget.style.borderColor = '#EBDCC4';
+                  e.currentTarget.style.backgroundColor = '#2B5F5E';
+                  e.currentTarget.style.color = '#F5EFE3';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive('/dashboard')) {
+                  e.currentTarget.style.borderColor = 'transparent';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#EBDCC4';
+                }
+              }}
               onClick={() => setIsMenuOpen(false)}
             >
               Dashboard
             </Link>
             <Link
               href="/trips"
-              className={`block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${
-                isActive('/trips')
-                  ? 'border-purple-500 bg-purple-50 text-purple-700'
-                  : 'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'
-              }`}
+              className="block border-l-4 py-2 pl-3 pr-4 text-base font-medium transition-colors"
+              style={{
+                borderColor: isActive('/trips') ? '#DAAA63' : 'transparent',
+                backgroundColor: isActive('/trips') ? '#2B5F5E' : 'transparent',
+                color: isActive('/trips') ? '#F5EFE3' : '#EBDCC4'
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive('/trips')) {
+                  e.currentTarget.style.borderColor = '#EBDCC4';
+                  e.currentTarget.style.backgroundColor = '#2B5F5E';
+                  e.currentTarget.style.color = '#F5EFE3';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive('/trips')) {
+                  e.currentTarget.style.borderColor = 'transparent';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#EBDCC4';
+                }
+              }}
               onClick={() => setIsMenuOpen(false)}
             >
               Browse Trips
             </Link>
             <Link
               href="/trips/my-trips"
-              className={`block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${
-                isActive('/trips/my-trips')
-                  ? 'border-purple-500 bg-purple-50 text-purple-700'
-                  : 'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'
-              }`}
+              className="block border-l-4 py-2 pl-3 pr-4 text-base font-medium transition-colors"
+              style={{
+                borderColor: isActive('/trips/my-trips') ? '#DAAA63' : 'transparent',
+                backgroundColor: isActive('/trips/my-trips') ? '#2B5F5E' : 'transparent',
+                color: isActive('/trips/my-trips') ? '#F5EFE3' : '#EBDCC4'
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive('/trips/my-trips')) {
+                  e.currentTarget.style.borderColor = '#EBDCC4';
+                  e.currentTarget.style.backgroundColor = '#2B5F5E';
+                  e.currentTarget.style.color = '#F5EFE3';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive('/trips/my-trips')) {
+                  e.currentTarget.style.borderColor = 'transparent';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#EBDCC4';
+                }
+              }}
               onClick={() => setIsMenuOpen(false)}
             >
               My Trips
             </Link>
             <Link
               href="/bookmarks"
-              className={`block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${
-                isActive('/bookmarks')
-                  ? 'border-purple-500 bg-purple-50 text-purple-700'
-                  : 'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'
-              }`}
+              className="block border-l-4 py-2 pl-3 pr-4 text-base font-medium transition-colors"
+              style={{
+                borderColor: isActive('/bookmarks') ? '#DAAA63' : 'transparent',
+                backgroundColor: isActive('/bookmarks') ? '#2B5F5E' : 'transparent',
+                color: isActive('/bookmarks') ? '#F5EFE3' : '#EBDCC4'
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive('/bookmarks')) {
+                  e.currentTarget.style.borderColor = '#EBDCC4';
+                  e.currentTarget.style.backgroundColor = '#2B5F5E';
+                  e.currentTarget.style.color = '#F5EFE3';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive('/bookmarks')) {
+                  e.currentTarget.style.borderColor = 'transparent';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#EBDCC4';
+                }
+              }}
               onClick={() => setIsMenuOpen(false)}
             >
               Bookmarks
             </Link>
           </div>
-          <div className="border-t border-gray-200 pb-3 pt-4">
+          <div className="border-t pb-3 pt-4" style={{ borderColor: '#2B5F5E' }}>
             <div className="flex items-center px-4">
               <div className="flex-shrink-0">
                 {session?.user?.image ? (
@@ -279,16 +441,16 @@ export default function Navbar() {
                     className="h-10 w-10 rounded-full object-cover"
                   />
                 ) : (
-                  <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
+                  <div className="h-10 w-10 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#C76D45' }}>
                     {session?.user?.name?.[0]?.toUpperCase() || 'U'}
                   </div>
                 )}
               </div>
               <div className="ml-3">
-                <div className="text-base font-medium text-gray-800">
+                <div className="text-base font-medium" style={{ color: '#F5EFE3' }}>
                   {session?.user?.name || 'User'}
                 </div>
-                <div className="text-sm font-medium text-gray-500">
+                <div className="text-sm font-medium" style={{ color: '#EBDCC4' }}>
                   {session?.user?.email}
                 </div>
               </div>
@@ -296,21 +458,42 @@ export default function Navbar() {
             <div className="mt-3 space-y-1">
               <Link
                 href="/profile"
-                className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+                className="block px-4 py-2 text-base font-medium transition-colors"
+                style={{ color: '#EBDCC4' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#2B5F5E';
+                  e.currentTarget.style.color = '#F5EFE3';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#EBDCC4';
+                }}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Your Profile
               </Link>
               <Link
                 href="/notifications"
-                className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+                className="block px-4 py-2 text-base font-medium transition-colors"
+                style={{ color: '#EBDCC4' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#2B5F5E';
+                  e.currentTarget.style.color = '#F5EFE3';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#EBDCC4';
+                }}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Notifications
               </Link>
               <button
                 onClick={handleSignOut}
-                className="block w-full text-left px-4 py-2 text-base font-medium text-red-600 hover:bg-gray-100"
+                className="block w-full text-left px-4 py-2 text-base font-medium transition-colors"
+                style={{ color: '#C76D45' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#2B5F5E'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
                 Sign out
               </button>
@@ -321,9 +504,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
-
-
-
-
-

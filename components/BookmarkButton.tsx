@@ -90,11 +90,11 @@ export default function BookmarkButton({
     <button
       onClick={toggleBookmark}
       disabled={loading}
-      className={`inline-flex items-center justify-center rounded-xl transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${
-        bookmarked 
-          ? 'bg-red-100 text-red-600 hover:bg-red-200' 
-          : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-600'
-      } ${showLabel ? 'px-6 py-3' : buttonSizeClasses[size]} ${className}`}
+      className={`inline-flex items-center justify-center rounded-card transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${showLabel ? 'px-6 py-3' : buttonSizeClasses[size]} ${className}`}
+      style={{
+        backgroundColor: bookmarked ? 'rgba(199, 109, 69, 0.1)' : '#EBDCC4',
+        color: bookmarked ? '#C76D45' : 'rgba(51, 53, 59, 0.4)'
+      }}
       title={bookmarked ? 'Remove bookmark' : 'Bookmark this trip'}
     >
       {loading ? (

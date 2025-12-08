@@ -55,7 +55,8 @@ export default function MessageList({ messages }: MessageListProps) {
       <div className="flex h-full items-center justify-center p-4">
         <div className="text-center">
           <svg
-            className="mx-auto h-16 w-16 text-gray-300"
+            className="mx-auto h-16 w-16"
+            style={{ color: 'rgba(51, 53, 59, 0.2)' }}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -67,8 +68,8 @@ export default function MessageList({ messages }: MessageListProps) {
               d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
             />
           </svg>
-          <p className="mt-4 text-sm font-medium text-gray-900">No messages yet</p>
-          <p className="mt-1 text-xs text-gray-500">
+          <p className="mt-4 text-sm font-medium" style={{ color: '#33353B' }}>No messages yet</p>
+          <p className="mt-1 text-xs" style={{ color: 'rgba(51, 53, 59, 0.5)' }}>
             Be the first to start the conversation!
           </p>
         </div>
@@ -101,10 +102,17 @@ export default function MessageList({ messages }: MessageListProps) {
                   <img
                     src={message.user.avatarUrl}
                     alt={message.user.name || 'User'}
-                    className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
+                    className="h-8 w-8 rounded-full object-cover"
+                    style={{ border: '2px solid #d4c7ad' }}
                   />
                 ) : (
-                  <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-semibold border-2 border-gray-200">
+                  <div 
+                    className="h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-semibold"
+                    style={{ 
+                      background: 'linear-gradient(to bottom right, #2B5F5E, #DAAA63)',
+                      border: '2px solid #d4c7ad' 
+                    }}
+                  >
                     {(message.user.name?.[0] || 'U').toUpperCase()}
                   </div>
                 )
@@ -119,18 +127,29 @@ export default function MessageList({ messages }: MessageListProps) {
             >
               {/* Name */}
               {showName && !isOwnMessage && (
-                <span className="mb-1 px-3 text-xs font-medium text-gray-600">
+                <span 
+                  className="mb-1 px-3 text-xs font-medium" 
+                  style={{ color: 'rgba(51, 53, 59, 0.7)' }}
+                >
                   {message.user.name || 'Anonymous'}
                 </span>
               )}
 
               {/* Bubble */}
               <div
-                className={`rounded-2xl px-4 py-2 shadow-sm ${
-                  isOwnMessage
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-br-sm'
-                    : 'bg-gray-100 text-gray-900 rounded-bl-sm'
-                }`}
+                className="px-4 py-2"
+                style={{
+                  borderRadius: '8px',
+                  ...(isOwnMessage ? {
+                    backgroundColor: '#C76D45',
+                    color: 'white',
+                    borderBottomRightRadius: '2px'
+                  } : {
+                    backgroundColor: 'rgba(51, 53, 59, 0.08)',
+                    color: '#33353B',
+                    borderBottomLeftRadius: '2px'
+                  })
+                }}
               >
                 <p className="text-sm whitespace-pre-wrap break-words">
                   {message.content}
@@ -139,7 +158,8 @@ export default function MessageList({ messages }: MessageListProps) {
 
               {/* Timestamp */}
               <span
-                className={`mt-1 px-3 text-xs text-gray-500 ${isOwnMessage ? 'text-right' : 'text-left'}`}
+                className={`mt-1 px-3 text-xs ${isOwnMessage ? 'text-right' : 'text-left'}`}
+                style={{ color: 'rgba(51, 53, 59, 0.5)' }}
               >
                 {formatMessageTime(new Date(message.createdAt))}
               </span>

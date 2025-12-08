@@ -15,10 +15,10 @@ export default function LoadingSpinner({ size = 'md', text }: LoadingSpinnerProp
   return (
     <div className="flex flex-col items-center justify-center gap-3">
       <div
-        className={`${sizeClasses[size]} animate-spin rounded-full border-blue-600 border-t-transparent`}
+        className={`${sizeClasses[size]} animate-spin rounded-full border-t-transparent`}
+        style={{ borderColor: '#DAAA63', borderTopColor: 'transparent' }}
       />
-      {text && <p className="text-sm text-gray-600">{text}</p>}
+      {text && <p className="text-sm" style={{ color: 'rgba(51, 53, 59, 0.7)' }}>{text}</p>}
     </div>
   );
 }
-

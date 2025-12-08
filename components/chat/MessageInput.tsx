@@ -90,7 +90,13 @@ export default function MessageInput({
   };
 
   return (
-    <div className="border-t border-gray-200 bg-white p-3">
+    <div 
+      className="p-3" 
+      style={{ 
+        borderTop: '1px solid #d4c7ad', 
+        backgroundColor: 'white' 
+      }}
+    >
       <div className="flex items-end gap-2">
         {/* Textarea */}
         <div className="flex-1 relative">
@@ -103,16 +109,24 @@ export default function MessageInput({
             placeholder={disabled ? 'Chat unavailable' : 'Type a message...'}
             disabled={disabled || isSending}
             rows={1}
-            className="w-full resize-none rounded-xl border-2 border-gray-200 px-4 py-2.5 text-sm placeholder-gray-400 transition-colors focus:border-blue-500 focus:outline-none disabled:bg-gray-50 disabled:cursor-not-allowed"
-            style={{ maxHeight: '120px' }}
+            className="w-full resize-none px-4 py-2.5 text-sm transition-colors focus:outline-none"
+            style={{ 
+              maxHeight: '120px',
+              border: '2px solid #d4c7ad',
+              borderRadius: '2px',
+              color: '#33353B',
+              cursor: (disabled || isSending) ? 'not-allowed' : 'text',
+              backgroundColor: (disabled || isSending) ? '#F5EFE3' : 'white'
+            }}
+            onFocus={(e) => e.currentTarget.style.borderColor = '#DAAA63'}
+            onBlur={(e) => e.currentTarget.style.borderColor = '#d4c7ad'}
           />
 
           {/* Character counter */}
           {message.length > maxLength * 0.8 && (
             <div
-              className={`absolute bottom-1 right-2 text-xs font-medium ${
-                charactersLeft < 50 ? 'text-red-500' : 'text-gray-400'
-              }`}
+              className="absolute bottom-1 right-2 text-xs font-medium"
+              style={{ color: charactersLeft < 50 ? '#C76D45' : 'rgba(51, 53, 59, 0.5)' }}
             >
               {charactersLeft}
             </div>
@@ -123,7 +137,22 @@ export default function MessageInput({
         <button
           onClick={handleSend}
           disabled={!message.trim() || isSending || disabled}
-          className="flex-shrink-0 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 p-2.5 text-white shadow-sm transition-all hover:shadow-md disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed disabled:shadow-none"
+          className="flex-shrink-0 p-2.5 text-white transition-all"
+          style={{
+            borderRadius: '2px',
+            backgroundColor: (!message.trim() || isSending || disabled) 
+              ? 'rgba(51, 53, 59, 0.3)' 
+              : '#C76D45',
+            cursor: (!message.trim() || isSending || disabled) ? 'not-allowed' : 'pointer'
+          }}
+          onMouseEnter={(e) => {
+            if (!(!message.trim() || isSending || disabled)) {
+              e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = 'none';
+          }}
           title="Send message (Enter)"
         >
           {isSending ? (
@@ -147,9 +176,15 @@ export default function MessageInput({
       </div>
 
       {/* Helper text */}
-      <p className="mt-1.5 px-1 text-xs text-gray-500">
-        Press <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono">Enter</kbd> to
-        send, <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono">Shift+Enter</kbd>{' '}
+      <p className="mt-1.5 px-1 text-xs" style={{ color: 'rgba(51, 53, 59, 0.5)' }}>
+        Press <kbd 
+          className="px-1.5 py-0.5 font-mono" 
+          style={{ borderRadius: '2px', backgroundColor: 'rgba(51, 53, 59, 0.1)' }}
+        >Enter</kbd> to
+        send, <kbd 
+          className="px-1.5 py-0.5 font-mono" 
+          style={{ borderRadius: '2px', backgroundColor: 'rgba(51, 53, 59, 0.1)' }}
+        >Shift+Enter</kbd>{' '}
         for new line
       </p>
     </div>

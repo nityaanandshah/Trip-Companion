@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 interface EmptyStateProps {
-  icon?: string;
+  icon?: React.ReactNode;
   title: string;
   description: string;
   actionLabel?: string;
@@ -11,7 +11,11 @@ interface EmptyStateProps {
 }
 
 export default function EmptyState({
-  icon = '🔍',
+  icon = (
+    <svg className="h-12 w-12" style={{ color: 'rgba(51, 53, 59, 0.4)' }} viewBox="0 0 20 20" fill="currentColor">
+      <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd"/>
+    </svg>
+  ),
   title,
   description,
   actionLabel,
@@ -21,22 +25,23 @@ export default function EmptyState({
     <div className="flex flex-col items-center justify-center py-16 px-4">
       <div className="text-center max-w-md">
         {/* Icon */}
-        <div className="mb-6">
-          <span className="text-6xl">{icon}</span>
+        <div className="mb-6 mx-auto w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: '#F5EFE3' }}>
+          {icon}
         </div>
 
         {/* Title */}
-        <h3 className="text-2xl font-bold text-gray-900 mb-3">{title}</h3>
+        <h3 className="text-2xl font-bold mb-3" style={{ color: '#33353B' }}>{title}</h3>
 
         {/* Description */}
-        <p className="text-gray-600 mb-8">{description}</p>
+        <p className="mb-8" style={{ color: 'rgba(51, 53, 59, 0.7)' }}>{description}</p>
 
         {/* Action Button */}
         {actionLabel && actionHref && (
-          <Link
-            href={actionHref}
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all"
-          >
+              <Link
+                href={actionHref}
+                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold border transition-opacity hover:opacity-90"
+                style={{ borderRadius: '2px', backgroundColor: '#DAAA63', color: '#33353B', borderColor: 'rgba(43, 95, 94, 0.15)' }}
+              >
             <svg
               className="h-5 w-5"
               fill="none"
@@ -57,4 +62,3 @@ export default function EmptyState({
     </div>
   );
 }
-

@@ -91,7 +91,11 @@ export default function JoinRequestButton({
     return (
       <button
         onClick={() => router.push('/auth/login')}
-        className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+        className="px-8 py-3 text-sm font-semibold text-white hover:scale-105 transition-all"
+        style={{ 
+          borderRadius: '2px',
+          background: 'linear-gradient(to right, #C76D45, #DAAA63)'
+        }}
       >
         Login to Join Trip
       </button>
@@ -101,7 +105,15 @@ export default function JoinRequestButton({
   // Show status-based UI
   if (requestStatus === 'approved') {
     return (
-      <div className="rounded-xl bg-green-100 border-2 border-green-200 px-6 py-3 text-sm font-semibold text-green-800 inline-flex items-center justify-center whitespace-nowrap">
+      <div 
+        className="px-6 py-3 text-sm font-semibold inline-flex items-center justify-center whitespace-nowrap border-2"
+        style={{ 
+          borderRadius: '2px',
+          backgroundColor: 'rgba(43, 95, 94, 0.1)',
+          borderColor: '#2B5F5E',
+          color: '#2B5F5E'
+        }}
+      >
         <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
         </svg>
@@ -112,7 +124,15 @@ export default function JoinRequestButton({
 
   if (requestStatus === 'pending') {
     return (
-      <div className="rounded-xl bg-amber-100 border-2 border-amber-200 px-6 py-3 text-sm font-semibold text-amber-800 inline-flex items-center justify-center whitespace-nowrap">
+      <div 
+        className="px-6 py-3 text-sm font-semibold inline-flex items-center justify-center whitespace-nowrap border-2"
+        style={{ 
+          borderRadius: '2px',
+          backgroundColor: '#F5EFE3',
+          borderColor: '#DAAA63',
+          color: '#DAAA63'
+        }}
+      >
         <svg className="h-5 w-5 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
         </svg>
@@ -123,7 +143,15 @@ export default function JoinRequestButton({
 
   if (requestStatus === 'rejected') {
     return (
-      <div className="rounded-xl bg-red-100 border-2 border-red-200 px-6 py-3 text-sm font-semibold text-red-800 inline-flex items-center justify-center whitespace-nowrap">
+      <div 
+        className="px-6 py-3 text-sm font-semibold inline-flex items-center justify-center whitespace-nowrap border-2"
+        style={{ 
+          borderRadius: '2px',
+          backgroundColor: 'rgba(199, 109, 69, 0.1)',
+          borderColor: '#C76D45',
+          color: '#C76D45'
+        }}
+      >
         <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
         </svg>
@@ -135,7 +163,15 @@ export default function JoinRequestButton({
   // Check if trip is not accepting requests
   if (tripStatus !== 'open') {
     return (
-      <div className="rounded-xl bg-gray-100 border-2 border-gray-200 px-6 py-3 text-sm font-semibold text-gray-600 text-center whitespace-nowrap">
+      <div 
+        className="px-6 py-3 text-sm font-semibold text-center whitespace-nowrap border-2"
+        style={{ 
+          borderRadius: '2px',
+          backgroundColor: 'rgba(51, 53, 59, 0.1)',
+          borderColor: 'rgba(51, 53, 59, 0.3)',
+          color: 'rgba(51, 53, 59, 0.7)'
+        }}
+      >
         Not Accepting Requests
       </div>
     );
@@ -144,7 +180,15 @@ export default function JoinRequestButton({
   // Check if trip is full
   if (currentGroupSize >= requiredGroupSize) {
     return (
-      <div className="rounded-xl bg-gray-100 border-2 border-gray-200 px-6 py-3 text-sm font-semibold text-gray-600 text-center whitespace-nowrap">
+      <div 
+        className="px-6 py-3 text-sm font-semibold text-center whitespace-nowrap border-2"
+        style={{ 
+          borderRadius: '2px',
+          backgroundColor: 'rgba(51, 53, 59, 0.1)',
+          borderColor: 'rgba(51, 53, 59, 0.3)',
+          color: 'rgba(51, 53, 59, 0.7)'
+        }}
+      >
         Trip is Full
       </div>
     );
@@ -154,19 +198,39 @@ export default function JoinRequestButton({
   return (
     <div>
       {error && (
-        <div className="mb-4 rounded-xl bg-red-50 border-2 border-red-200 p-3 text-sm text-red-800">
+        <div 
+          className="mb-4 p-3 text-sm border-2"
+          style={{ 
+            borderRadius: '2px',
+            backgroundColor: 'rgba(199, 109, 69, 0.1)',
+            borderColor: '#C76D45',
+            color: '#C76D45'
+          }}
+        >
           {error}
         </div>
       )}
       {success && (
-        <div className="mb-4 rounded-xl bg-green-50 border-2 border-green-200 p-3 text-sm text-green-800">
+        <div 
+          className="mb-4 p-3 text-sm border-2"
+          style={{ 
+            borderRadius: '2px',
+            backgroundColor: 'rgba(43, 95, 94, 0.1)',
+            borderColor: '#2B5F5E',
+            color: '#2B5F5E'
+          }}
+        >
           {success}
         </div>
       )}
       <button
         onClick={handleRequest}
         disabled={loading}
-        className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 inline-flex items-center justify-center whitespace-nowrap"
+        className="px-6 py-3 text-sm font-semibold text-white hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 inline-flex items-center justify-center whitespace-nowrap"
+        style={{ 
+          borderRadius: '2px',
+          background: 'linear-gradient(to right, #C76D45, #DAAA63)'
+        }}
       >
         {loading ? (
           <>

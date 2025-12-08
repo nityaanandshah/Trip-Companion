@@ -23,17 +23,34 @@ export default function TypingIndicator({ typingUsers }: TypingIndicatorProps) {
   };
 
   return (
-    <div className="border-t border-gray-100 bg-gray-50 px-4 py-2">
+    <div 
+      className="px-4 py-2" 
+      style={{ 
+        borderTop: '1px solid #EBDCC4', 
+        backgroundColor: '#F5EFE3' 
+      }}
+    >
       <div className="flex items-center gap-2">
         {/* Animated dots */}
         <div className="flex items-center gap-1">
-          <div className="h-2 w-2 rounded-full bg-blue-500 animate-bounce" style={{ animationDelay: '0ms' }} />
-          <div className="h-2 w-2 rounded-full bg-blue-500 animate-bounce" style={{ animationDelay: '150ms' }} />
-          <div className="h-2 w-2 rounded-full bg-blue-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+          <div 
+            className="h-2 w-2 rounded-full animate-bounce" 
+            style={{ backgroundColor: 'rgba(218, 170, 99, 0.7)', animationDelay: '0ms' }} 
+          />
+          <div 
+            className="h-2 w-2 rounded-full animate-bounce" 
+            style={{ backgroundColor: 'rgba(218, 170, 99, 0.7)', animationDelay: '150ms' }} 
+          />
+          <div 
+            className="h-2 w-2 rounded-full animate-bounce" 
+            style={{ backgroundColor: 'rgba(218, 170, 99, 0.7)', animationDelay: '300ms' }} 
+          />
         </div>
 
         {/* Text */}
-        <p className="text-xs font-medium text-gray-600">{getTypingText()}...</p>
+        <p className="text-xs font-medium" style={{ color: 'rgba(51, 53, 59, 0.7)' }}>
+          {getTypingText()}...
+        </p>
       </div>
     </div>
   );

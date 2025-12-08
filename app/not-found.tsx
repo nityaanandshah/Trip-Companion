@@ -3,20 +3,20 @@ import Navbar from '@/components/Navbar';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen" style={{ backgroundColor: '#F5EFE3' }}>
       <Navbar />
       <div className="flex flex-col items-center justify-center px-4 py-16">
         <div className="text-center max-w-2xl">
           {/* 404 Illustration */}
           <div className="mb-8">
-            <span className="text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+            <span className="text-9xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(to right, #C76D45, #8B5E3C)', WebkitBackgroundClip: 'text' }}>
               404
             </span>
           </div>
 
           {/* Message */}
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Page Not Found</h1>
-          <p className="text-lg text-gray-600 mb-8">
+          <h1 className="text-4xl font-bold mb-4" style={{ color: '#33353B' }}>Page Not Found</h1>
+          <p className="text-lg mb-8" style={{ color: 'rgba(51, 53, 59, 0.7)' }}>
             Oops! The page you're looking for doesn't exist. It might have been moved or deleted.
           </p>
 
@@ -24,7 +24,8 @@ export default function NotFound() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold hover:opacity-90 transition-opacity"
+              style={{ borderRadius: '2px', backgroundColor: '#C76D45' }}
             >
               <svg
                 className="h-5 w-5"
@@ -44,7 +45,8 @@ export default function NotFound() {
 
             <Link
               href="/trips"
-              className="inline-flex items-center gap-2 rounded-xl border-2 border-gray-300 bg-white px-6 py-3 text-gray-700 font-semibold shadow-md hover:shadow-lg hover:border-blue-400 transition-all"
+              className="inline-flex items-center gap-2 border-2 bg-white px-6 py-3 font-semibold hover:opacity-80 transition-opacity"
+              style={{ borderRadius: '2px', borderColor: '#EBDCC4', color: 'rgba(51, 53, 59, 0.8)' }}
             >
               <svg
                 className="h-5 w-5"
@@ -64,33 +66,37 @@ export default function NotFound() {
           </div>
 
           {/* Suggestions */}
-          <div className="mt-12 pt-8 border-t border-gray-200">
-            <p className="text-sm font-medium text-gray-700 mb-4">You might be looking for:</p>
+          <div className="mt-12 pt-8 border-t" style={{ borderColor: '#d4c7ad' }}>
+            <p className="text-sm font-medium mb-4" style={{ color: 'rgba(51, 53, 59, 0.8)' }}>You might be looking for:</p>
             <div className="flex flex-wrap gap-3 justify-center">
               <Link
                 href="/trips/my-trips"
-                className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                className="text-sm hover:underline hover:opacity-80 transition-opacity"
+                style={{ color: '#DAAA63' }}
               >
                 My Trips
               </Link>
-              <span className="text-gray-300">•</span>
+              <span style={{ color: '#EBDCC4' }}>•</span>
               <Link
                 href="/bookmarks"
-                className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                className="text-sm hover:underline hover:opacity-80 transition-opacity"
+                style={{ color: '#DAAA63' }}
               >
                 Bookmarks
               </Link>
-              <span className="text-gray-300">•</span>
+              <span style={{ color: '#EBDCC4' }}>•</span>
               <Link
                 href="/notifications"
-                className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                className="text-sm hover:underline hover:opacity-80 transition-opacity"
+                style={{ color: '#DAAA63' }}
               >
                 Notifications
               </Link>
-              <span className="text-gray-300">•</span>
+              <span style={{ color: '#EBDCC4' }}>•</span>
               <Link
                 href="/profile/edit"
-                className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                className="text-sm hover:underline hover:opacity-80 transition-opacity"
+                style={{ color: '#DAAA63' }}
               >
                 Edit Profile
               </Link>
@@ -101,4 +107,3 @@ export default function NotFound() {
     </div>
   );
 }
-

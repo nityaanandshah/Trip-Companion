@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #F5EFE3;
+  --foreground: #33353B;
+  --forest: #2B5F5E;
+  --terracotta: #C76D45;
+  --sand: #EBDCC4;
+  --mustard: #DAAA63;
+  --charcoal: #33353B;
+  --cream: #F5EFE3;
+  --earth: #8B5E3C;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto), system-ui, -apple-system, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), Georgia, serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  /* Flat design - minimal borders instead of shadows */
+  .border-subtle {
+    border: 1px solid rgba(43, 95, 94, 0.1);
+  }
+  
+  .border-card {
+    border: 1px solid rgba(43, 95, 94, 0.15);
+  }
+  
+  /* Button styles */
+  .btn-primary {
+    background-color: #DAAA63;
+    color: #33353B;
+    border: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #c99547;
+  }
+  
+  .btn-secondary {
+    background-color: #C76D45;
+    color: #ffffff;
+    border: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #a85937;
   }
 }
 

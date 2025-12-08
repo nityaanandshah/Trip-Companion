@@ -12,13 +12,14 @@ export default function ErrorMessage({
   onRetry,
 }: ErrorMessageProps) {
   return (
-    <div className="rounded-2xl bg-red-50 border-2 border-red-200 p-6">
+    <div className="border-2 p-6" style={{ borderRadius: '2px', backgroundColor: 'rgba(199, 109, 69, 0.1)', borderColor: '#C76D45' }}>
       <div className="flex items-start gap-4">
         {/* Error Icon */}
         <div className="flex-shrink-0">
-          <div className="rounded-full bg-red-100 p-3">
+          <div className="rounded-full p-3" style={{ backgroundColor: 'rgba(199, 109, 69, 0.2)' }}>
             <svg
-              className="h-6 w-6 text-red-600"
+              className="h-6 w-6"
+              style={{ color: '#C76D45' }}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -35,14 +36,15 @@ export default function ErrorMessage({
 
         {/* Error Content */}
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-red-900 mb-2">{title}</h3>
-          <p className="text-sm text-red-700 mb-4">{message}</p>
+          <h3 className="text-lg font-semibold mb-2" style={{ color: '#C76D45' }}>{title}</h3>
+          <p className="text-sm mb-4" style={{ color: 'rgba(199, 109, 69, 0.9)' }}>{message}</p>
 
           {/* Retry Button */}
           {onRetry && (
             <button
               onClick={onRetry}
-              className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              style={{ backgroundColor: '#C76D45' }}
             >
               <svg
                 className="h-4 w-4"
@@ -65,4 +67,3 @@ export default function ErrorMessage({
     </div>
   );
 }
-

@@ -67,30 +67,32 @@ export default function TripSidebar({ trip, isOwner }: TripSidebarProps) {
       />
       
       {/* Trip Organizer Card */}
-      <div className="rounded-2xl bg-white p-6 shadow-lg border-2 border-gray-200">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Trip Organizer</h3>
+      <div className="bg-white p-6 border-2" style={{ borderRadius: '2px', borderColor: '#d4c7ad' }}>
+        <h3 className="text-lg font-bold mb-4" style={{ color: '#33353B' }}>Trip Organizer</h3>
         <div className="flex items-center space-x-4">
           {trip.owner.avatarUrl ? (
             <img
               src={trip.owner.avatarUrl}
               alt={trip.owner.name || 'User'}
-              className="h-16 w-16 rounded-full object-cover ring-4 ring-gray-100"
+              className="h-16 w-16 rounded-full object-cover ring-4"
+              style={{ ringColor: 'rgba(51, 53, 59, 0.1)' }}
             />
           ) : (
-            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center ring-4 ring-gray-100">
+            <div className="h-16 w-16 rounded-full flex items-center justify-center ring-4" style={{ background: 'linear-gradient(to bottom right, #2B5F5E, #DAAA63)', ringColor: 'rgba(51, 53, 59, 0.1)' }}>
               <span className="text-2xl font-bold text-white">
                 {trip.owner.name?.[0]?.toUpperCase() || 'U'}
               </span>
             </div>
           )}
           <div className="flex-1">
-            <p className="font-semibold text-gray-900">{trip.owner.name}</p>
-            <p className="text-sm text-gray-500 mb-2">{trip.owner.email}</p>
+            <p className="font-semibold" style={{ color: '#33353B' }}>{trip.owner.name}</p>
+            <p className="text-sm mb-2" style={{ color: 'rgba(51, 53, 59, 0.5)' }}>{trip.owner.email}</p>
             <a
               href={`/profile/${trip.owner.id}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+              className="inline-flex items-center text-xs font-semibold hover:underline"
+              style={{ color: '#DAAA63' }}
             >
               View Profile
               <svg className="ml-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,19 +104,19 @@ export default function TripSidebar({ trip, isOwner }: TripSidebarProps) {
       </div>
 
       {/* Quick Stats */}
-      <div className="rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 p-6 text-white shadow-lg">
+      <div className="p-6 text-white" style={{ borderRadius: '2px', backgroundColor: '#C76D45' }}>
         <h3 className="text-lg font-bold mb-4">Quick Stats</h3>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-blue-100">Created</span>
+            <span className="text-sm" style={{ color: '#EBDCC4' }}>Created</span>
             <span className="font-semibold">{format(new Date(trip.createdAt), 'MMM d, yyyy')}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-blue-100">Status</span>
+            <span className="text-sm" style={{ color: '#EBDCC4' }}>Status</span>
             <span className="font-semibold">{trip.status}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-blue-100">Spots Available</span>
+            <span className="text-sm" style={{ color: '#EBDCC4' }}>Spots Available</span>
             <span className="font-semibold">{trip.requiredGroupSize - trip.currentGroupSize}</span>
           </div>
         </div>
@@ -122,4 +124,3 @@ export default function TripSidebar({ trip, isOwner }: TripSidebarProps) {
     </div>
   );
 }
-

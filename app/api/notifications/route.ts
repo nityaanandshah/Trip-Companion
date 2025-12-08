@@ -33,6 +33,7 @@ export async function GET(request: NextRequest) {
                 user: {
                   select: {
                     name: true,
+                    avatarUrl: true,
                   },
                 },
               },
@@ -44,6 +45,7 @@ export async function GET(request: NextRequest) {
                 tripId: attendee.tripId,
                 userId: attendee.userId,
                 userName: attendee.user.name,
+                userAvatarUrl: attendee.user.avatarUrl,
               };
             }
           } catch (error) {

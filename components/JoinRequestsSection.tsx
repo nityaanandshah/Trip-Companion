@@ -148,15 +148,17 @@ export default function JoinRequestsSection({ tripId, isOwner }: JoinRequestsSec
   }
 
   return (
-    <div className="mb-8 rounded-2xl bg-white p-8 shadow-lg border-2 border-gray-200">
+    <div className="mb-8 rounded-card bg-white p-8  border-2 border-sand-dark">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-900 flex items-center">
-          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-600 mr-3">
-            🤝
+          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-sand-light text-mustard mr-3">
+            <svg className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z"/>
+            </svg>
           </span>
           Join Requests
         </h2>
-        <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
+        <span className="inline-flex items-center rounded-full bg-sand-light px-3 py-1 text-xs font-semibold text-blue-800">
           {pendingRequests.length}
         </span>
       </div>
@@ -165,7 +167,7 @@ export default function JoinRequestsSection({ tripId, isOwner }: JoinRequestsSec
         {pendingRequests.map((attendee) => (
           <div
             key={attendee.id}
-            className="flex items-center justify-between p-4 rounded-xl bg-gray-50 border-2 border-gray-200 hover:border-blue-300 transition-colors"
+            className="flex items-center justify-between p-4 rounded-card bg-cream border-2 border-sand-dark hover:border-blue-300 transition-colors"
           >
             <div className="flex items-center gap-4 flex-1">
               {attendee.user.avatarUrl ? (
@@ -175,7 +177,7 @@ export default function JoinRequestsSection({ tripId, isOwner }: JoinRequestsSec
                   className="h-12 w-12 rounded-full object-cover ring-2 ring-gray-200"
                 />
               ) : (
-                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center ring-2 ring-gray-200">
+                <div className="h-12 w-12 rounded-full bg-mustard flex items-center justify-center ring-2 ring-gray-200">
                   <span className="text-lg font-bold text-white">
                     {attendee.user.name?.[0]?.toUpperCase() || 'U'}
                   </span>
@@ -188,7 +190,7 @@ export default function JoinRequestsSection({ tripId, isOwner }: JoinRequestsSec
                     href={`/profile/${attendee.user.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center"
+                    className="text-xs text-mustard hover:text-blue-800 hover:underline inline-flex items-center"
                   >
                     View Profile
                     <svg className="ml-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

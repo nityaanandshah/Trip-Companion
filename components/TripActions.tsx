@@ -30,7 +30,7 @@ export default function TripActions({
     return (
       <Link
         href={`/trips/${tripId}/edit`}
-        className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 shadow-lg transition-colors"
+        className="rounded-card bg-mustard px-6 py-3 text-sm font-semibold text-charcoal hover:bg-mustard-dark  transition-colors"
       >
         Edit Trip
       </Link>

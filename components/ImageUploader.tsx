@@ -155,10 +155,14 @@ export default function ImageUploader({
           />
           <label
             htmlFor="image-upload"
-            className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-12 transition-all hover:border-blue-500 hover:bg-blue-50"
+            className="flex cursor-pointer flex-col items-center justify-center border-2 border-dashed p-12 transition-all hover:opacity-90"
+            style={{ borderRadius: '2px', borderColor: 'rgba(51, 53, 59, 0.3)', backgroundColor: '#F5EFE3' }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#DAAA63'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(51, 53, 59, 0.3)'}
           >
             <svg
-              className="h-12 w-12 text-gray-400"
+              className="h-12 w-12"
+              style={{ color: 'rgba(51, 53, 59, 0.4)' }}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -170,10 +174,10 @@ export default function ImageUploader({
                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
               />
             </svg>
-            <p className="mt-4 text-sm font-semibold text-gray-700">
+            <p className="mt-4 text-sm font-semibold" style={{ color: 'rgba(51, 53, 59, 0.9)' }}>
               {uploading ? 'Uploading...' : 'Click to upload or drag and drop'}
             </p>
-            <p className="mt-2 text-xs text-gray-500">
+            <p className="mt-2 text-xs" style={{ color: 'rgba(51, 53, 59, 0.5)' }}>
               PNG, JPG, GIF up to 10MB ({images.length}/{maxImages} images)
             </p>
           </label>
@@ -182,8 +186,8 @@ export default function ImageUploader({
 
       {/* Error Message */}
       {error && (
-        <div className="rounded-xl bg-red-50 border-2 border-red-200 p-4">
-          <p className="text-sm font-medium text-red-800">{error}</p>
+        <div className="border-2 p-4" style={{ borderRadius: '2px', backgroundColor: 'rgba(199, 109, 69, 0.1)', borderColor: '#C76D45' }}>
+          <p className="text-sm font-medium" style={{ color: '#C76D45' }}>{error}</p>
         </div>
       )}
 
@@ -193,7 +197,8 @@ export default function ImageUploader({
           {images.map((image, index) => (
             <div
               key={index}
-              className="group relative aspect-video overflow-hidden rounded-xl border-2 border-gray-200 bg-gray-100"
+              className="group relative aspect-video overflow-hidden border-2"
+              style={{ borderRadius: '2px', borderColor: '#d4c7ad', backgroundColor: 'rgba(51, 53, 59, 0.1)' }}
             >
               <img
                 src={image.url}
@@ -202,13 +207,18 @@ export default function ImageUploader({
               />
               {image.uploading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-white border-r-transparent"></div>
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-r-transparent" style={{ borderColor: 'white', borderRightColor: 'transparent' }}></div>
                 </div>
               )}
               <button
                 onClick={() => removeImage(index)}
                 disabled={uploading}
-                className="absolute top-2 right-2 rounded-full bg-red-500 p-2 text-white opacity-0 shadow-lg transition-opacity hover:bg-red-600 group-hover:opacity-100 disabled:opacity-50"
+                className="absolute top-2 right-2 rounded-full p-2 text-white opacity-0 transition-opacity hover:opacity-100 group-hover:opacity-100 disabled:opacity-50"
+                style={{ backgroundColor: '#C76D45' }}
+                onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+                onMouseLeave={(e) => {
+                  if (!uploading) e.currentTarget.style.opacity = '0';
+                }}
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -219,7 +229,7 @@ export default function ImageUploader({
                   />
                 </svg>
               </button>
-              <div className="absolute bottom-2 left-2 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white">
+              <div className="absolute bottom-2 left-2 rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
                 Image {index + 1}
               </div>
             </div>
@@ -229,4 +239,3 @@ export default function ImageUploader({
     </div>
   );
 }
-

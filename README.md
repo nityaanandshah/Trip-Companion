@@ -15,6 +15,7 @@ A social platform to find and connect with compatible travel companions for your
 ### ✅ Week 1: Authentication & User Profiles (COMPLETE)
 
 - **User Authentication**
+
   - Email/password registration with validation
   - Secure login with bcrypt password hashing
   - JWT session management with NextAuth.js
@@ -22,6 +23,7 @@ A social platform to find and connect with compatible travel companions for your
   - Sign out functionality
 
 - **User Profiles**
+
   - View profile page with stats
   - Edit profile page
   - Avatar upload (Cloudinary integration)
@@ -29,6 +31,7 @@ A social platform to find and connect with compatible travel companions for your
   - Member since date display
 
 - **Dashboard**
+
   - Personalized welcome message
   - Trip stats (trips created, joined, bookmarks)
   - Quick action buttons
@@ -47,50 +50,97 @@ A social platform to find and connect with compatible travel companions for your
 
 ### Prerequisites
 
-- Node.js 20.19+, 22.12+, or 24.0+
-- PostgreSQL database (Supabase recommended)
-- Cloudinary account (optional for Week 1, required for Week 2)
+- **Node.js** 20.19+, 22.12+, or 24.0+
+- **PostgreSQL** database (Supabase recommended)
+- **Cloudinary** account (for image uploads)
+- **npm** or **yarn** package manager
 
-### Installation
+### Installation Steps
 
-1. **Clone and install dependencies**
+1. **Clone the repository**
+
    ```bash
+   git clone <repository-url>
    cd Trips
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   # or
    yarn install
    ```
 
-2. **Set up environment variables**
-   
-   Create `.env` and `.env.local` files:
+3. **Set up environment variables**
+
+   Create a `.env` file in the root directory (copy from `env.example`):
+
    ```bash
-   # Database (Required)
+   cp env.example .env
+   ```
+
+   Then fill in your values:
+
+   ```bash
+   # Database (Required) - Get from Supabase or your PostgreSQL provider
    DATABASE_URL="postgresql://user:password@host:5432/database"
-   
-   # Auth (Required)
+
+   # Auth (Required) - Generate a secure secret
    NEXTAUTH_SECRET="your-secret-key"  # Generate: openssl rand -base64 32
    NEXTAUTH_URL="http://localhost:3000"
-   
-   # Cloudinary (Optional for now)
+
+   # Cloudinary (Required) - Get from cloudinary.com
    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="your-cloud-name"
    CLOUDINARY_API_KEY="your-api-key"
    CLOUDINARY_API_SECRET="your-api-secret"
+
+   # Socket.io (Optional - defaults to localhost:3000)
+   NEXT_PUBLIC_SOCKET_URL="http://localhost:3000"
    ```
 
-3. **Run database migrations**
+4. **Set up the database**
+
    ```bash
-   yarn prisma generate
-   yarn prisma migrate dev
+   # Generate Prisma Client
+   npx prisma generate
+
+   # Run migrations to create database tables
+   npx prisma migrate dev
+
+   # (Optional) View your database in Prisma Studio
+   npx prisma studio
    ```
 
-4. **Start the development server**
+5. **Start the development server**
+
    ```bash
    npm run dev
+   # or
+   yarn dev
    ```
 
-5. **Open your browser**
+6. **Open your browser**
    ```
    http://localhost:3000
    ```
+
+### Useful Commands
+
+```bash
+# Development
+npm run dev              # Start development server with Socket.io
+npm run build            # Build for production
+npm run start            # Start production server
+
+# Database
+npm run db:push          # Push schema changes without migrations
+npm run db:migrate       # Create and run a new migration
+npm run db:studio        # Open Prisma Studio
+
+# Linting
+npm run lint             # Run ESLint
+```
 
 ---
 
@@ -143,6 +193,7 @@ Trips/
 ## Tech Stack
 
 ### Frontend
+
 - **Framework**: Next.js 14+ (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
@@ -150,6 +201,7 @@ Trips/
 - **Forms**: React Hook Form (planned)
 
 ### Backend
+
 - **Runtime**: Next.js API Routes
 - **Database**: PostgreSQL (Supabase)
 - **ORM**: Prisma
@@ -157,6 +209,7 @@ Trips/
 - **File Storage**: Cloudinary
 
 ### Development
+
 - **Package Manager**: Yarn
 - **Linting**: ESLint
 - **Type Checking**: TypeScript
@@ -166,24 +219,28 @@ Trips/
 ## Roadmap
 
 ### Week 1: Authentication & User Profiles (COMPLETE)
+
 - User registration and login
 - Profile management
 - Avatar uploads
 - Dashboard
 
 ### Week 2: Trip Creation & Discovery (Next)
+
 - Trip creation form
 - Mood board images
 - Trip display pages
 - Browse and filter trips
 
 ### Week 3: Social Features
+
 - Bookmark trips
 - Join requests
 - Approve/reject workflow
 - In-app notifications
 
 ### Week 4: Real-time Chat & Deployment
+
 - Trip group chat
 - Real-time messaging
 - Polish and bug fixes
@@ -194,6 +251,7 @@ Trips/
 ## Deployment
 
 **Planned Deployment Stack:**
+
 - **Frontend**: Vercel (free tier)
 - **Database**: Supabase (free tier)
 - **Images**: Cloudinary (free tier)
@@ -203,7 +261,7 @@ Trips/
 
 ## 🤝 Contributing
 
-This is a learning project following a 4-week MVP timeline. 
+This is a learning project following a 4-week MVP timeline.
 
 ---
 

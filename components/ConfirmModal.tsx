@@ -17,7 +17,7 @@ export default function ConfirmModal({
   message,
   confirmText = 'Confirm',
   cancelText = 'Cancel',
-  confirmButtonClass = 'bg-blue-600 hover:bg-blue-700',
+  confirmButtonClass = 'bg-mustard hover:bg-mustard-dark text-charcoal',
   onConfirm,
   onCancel,
 }: ConfirmModalProps) {
@@ -25,20 +25,22 @@ export default function ConfirmModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="max-w-md w-full rounded-2xl bg-white p-6 shadow-2xl transform transition-all">
-        <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
-        <p className="text-gray-600 mb-6 whitespace-pre-line">{message}</p>
+      <div className="max-w-md w-full bg-white p-6 shadow-2xl transform transition-all" style={{ borderRadius: '2px' }}>
+        <h3 className="text-xl font-display font-bold mb-3" style={{ color: '#33353B' }}>{title}</h3>
+        <p className="mb-6 whitespace-pre-line" style={{ color: 'rgba(51, 53, 59, 0.7)' }}>{message}</p>
         
         <div className="flex gap-3 justify-end">
           <button
             onClick={onCancel}
-            className="rounded-xl px-6 py-3 text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+            className="px-6 py-3 text-sm font-semibold transition-opacity hover:opacity-80"
+            style={{ borderRadius: '2px', color: 'rgba(51, 53, 59, 0.9)', backgroundColor: 'rgba(51, 53, 59, 0.1)' }}
           >
             {cancelText}
           </button>
           <button
             onClick={onConfirm}
-            className={`rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-lg transition-colors ${confirmButtonClass}`}
+            className={`px-6 py-3 text-sm font-semibold transition-colors ${confirmButtonClass}`}
+            style={{ borderRadius: '2px' }}
           >
             {confirmText}
           </button>
@@ -47,4 +49,3 @@ export default function ConfirmModal({
     </div>
   );
 }
-

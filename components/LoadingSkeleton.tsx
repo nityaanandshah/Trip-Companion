@@ -14,12 +14,13 @@ export default function LoadingSkeleton({ type = 'text', count = 1 }: LoadingSke
         {skeletons.map((_, i) => (
           <div
             key={i}
-            className="rounded-2xl bg-white shadow-md border-2 border-gray-200 p-6 animate-pulse"
+            className="bg-white shadow-md border-2 p-6 animate-pulse"
+            style={{ borderRadius: '2px', borderColor: '#d4c7ad' }}
           >
-            <div className="h-6 bg-gray-200 rounded-lg w-3/4 mb-4" />
-            <div className="h-4 bg-gray-200 rounded w-1/2 mb-4" />
-            <div className="h-4 bg-gray-200 rounded w-full mb-2" />
-            <div className="h-4 bg-gray-200 rounded w-5/6" />
+            <div className="h-6 rounded-lg w-3/4 mb-4" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
+            <div className="h-4 rounded w-1/2 mb-4" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
+            <div className="h-4 rounded w-full mb-2" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
+            <div className="h-4 rounded w-5/6" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
           </div>
         ))}
       </div>
@@ -32,18 +33,19 @@ export default function LoadingSkeleton({ type = 'text', count = 1 }: LoadingSke
         {skeletons.map((_, i) => (
           <div
             key={i}
-            className="rounded-2xl bg-white shadow-md border-2 border-gray-200 overflow-hidden animate-pulse"
+            className="bg-white shadow-md border-2 overflow-hidden animate-pulse"
+            style={{ borderRadius: '2px', borderColor: '#d4c7ad' }}
           >
-            <div className="h-48 bg-gray-200" />
+            <div className="h-48" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
             <div className="p-6">
-              <div className="h-6 bg-gray-200 rounded-lg w-3/4 mb-3" />
-              <div className="h-4 bg-gray-200 rounded w-1/2 mb-4" />
+              <div className="h-6 rounded-lg w-3/4 mb-3" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
+              <div className="h-4 rounded w-1/2 mb-4" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
               <div className="flex gap-2 mb-3">
-                <div className="h-6 bg-gray-200 rounded-full w-20" />
-                <div className="h-6 bg-gray-200 rounded-full w-24" />
+                <div className="h-6 rounded-full w-20" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
+                <div className="h-6 rounded-full w-24" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
               </div>
-              <div className="h-4 bg-gray-200 rounded w-full mb-2" />
-              <div className="h-4 bg-gray-200 rounded w-4/5" />
+              <div className="h-4 rounded w-full mb-2" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
+              <div className="h-4 rounded w-4/5" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
             </div>
           </div>
         ))}
@@ -55,7 +57,7 @@ export default function LoadingSkeleton({ type = 'text', count = 1 }: LoadingSke
     return (
       <div className="flex gap-2">
         {skeletons.map((_, i) => (
-          <div key={i} className="h-10 w-10 bg-gray-200 rounded-full animate-pulse" />
+          <div key={i} className="h-10 w-10 rounded-full animate-pulse" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
         ))}
       </div>
     );
@@ -65,9 +67,8 @@ export default function LoadingSkeleton({ type = 'text', count = 1 }: LoadingSke
   return (
     <div className="space-y-3">
       {skeletons.map((_, i) => (
-        <div key={i} className="h-4 bg-gray-200 rounded animate-pulse w-full" />
+        <div key={i} className="h-4 rounded animate-pulse w-full" style={{ backgroundColor: 'rgba(51, 53, 59, 0.2)' }} />
       ))}
     </div>
   );
 }
-

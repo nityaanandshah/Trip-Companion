@@ -22,7 +22,7 @@ export default function SocketStatus({ position = 'top-right', showLabel = false
 
   return (
     <div className={`${positionClasses[position]} flex items-center gap-2`}>
-      <div className="flex items-center gap-2 rounded-full bg-white px-3 py-1.5 shadow-lg border border-gray-200">
+      <div className="flex items-center gap-2 rounded-full bg-white px-3 py-1.5  border border-sand-dark">
         {/* Status Indicator */}
         <div className="relative flex items-center">
           {isConnecting ? (

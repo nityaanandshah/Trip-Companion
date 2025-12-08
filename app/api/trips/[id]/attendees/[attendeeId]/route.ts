@@ -113,7 +113,7 @@ export async function PUT(
           userId: attendee.user.id,
           type: 'request_approved',
           referenceId: tripId,
-          message: `Your request to join "${trip.title}" has been approved! 🎉`,
+          message: `Your request to join "${trip.title}" has been approved!`,
           read: false,
         },
       });
