@@ -1,277 +1,115 @@
-# 🌍 Trip Companion - Find Your Travel Buddies
+# Trip Companion - Find Your Travel Buddies
 
 A social platform to find and connect with compatible travel companions for your trips.
 
-## 🎯 Project Status
-
-**Current Phase**: ✅ Week 1 Complete - Authentication & User Profiles  
-**Next Phase**: Week 2 - Trip Creation & Discovery  
-**Overall Progress**: 25% (Week 1 of 4 complete)
-
----
-
-## ✨ Features Implemented
-
-### ✅ Week 1: Authentication & User Profiles (COMPLETE)
-
-- **User Authentication**
-
-  - Email/password registration with validation
-  - Secure login with bcrypt password hashing
-  - JWT session management with NextAuth.js
-  - Protected routes and middleware
-  - Sign out functionality
-
-- **User Profiles**
-
-  - View profile page with stats
-  - Edit profile page
-  - Avatar upload (Cloudinary integration)
-  - Bio field (500 character limit)
-  - Member since date display
-
-- **Dashboard**
-
-  - Personalized welcome message
-  - Trip stats (trips created, joined, bookmarks)
-  - Quick action buttons
-  - Recent activity feed
-  - Responsive navigation
-
-- **Navigation**
-  - Professional navbar with user menu
-  - Mobile-responsive design
-  - All navigation links functional
-  - User avatar display in menu
+![Trip Companion](https://img.shields.io/badge/Next.js-16-black?style=flat-square)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat-square)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square)
+![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat-square)
+![Socket.io](https://img.shields.io/badge/Socket.io-4.8-010101?style=flat-square)
 
 ---
 
-## 🚀 Getting Started
+## Documentation
 
-### Prerequisites
+### For Users
 
-- **Node.js** 20.19+, 22.12+, or 24.0+
-- **PostgreSQL** database (Supabase recommended)
-- **Cloudinary** account (for image uploads)
-- **npm** or **yarn** package manager
+📖 **[FEATURES.md](./FEATURES.md)** - Complete guide to all application features  
+Perfect for non-technical users to understand what the app does.
 
-### Installation Steps
+### For Developers
 
-1. **Clone the repository**
+🛠️ **[DEVELOPER_GUIDE.md](./DEVELOPER_GUIDE.md)** - Setup, API docs, and development guide  
+Everything you need to set up and develop the application.
 
-   ```bash
-   git clone <repository-url>
-   cd Trips
-   ```
+### For Deployment
 
-2. **Install dependencies**
+🚀 **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Production deployment instructions  
+Step-by-step guide to deploy the app to production.
 
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+---
 
-3. **Set up environment variables**
-
-   Create a `.env` file in the root directory (copy from `env.example`):
-
-   ```bash
-   cp env.example .env
-   ```
-
-   Then fill in your values:
-
-   ```bash
-   # Database (Required) - Get from Supabase or your PostgreSQL provider
-   DATABASE_URL="postgresql://user:password@host:5432/database"
-
-   # Auth (Required) - Generate a secure secret
-   NEXTAUTH_SECRET="your-secret-key"  # Generate: openssl rand -base64 32
-   NEXTAUTH_URL="http://localhost:3000"
-
-   # Cloudinary (Required) - Get from cloudinary.com
-   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="your-cloud-name"
-   CLOUDINARY_API_KEY="your-api-key"
-   CLOUDINARY_API_SECRET="your-api-secret"
-
-   # Socket.io (Optional - defaults to localhost:3000)
-   NEXT_PUBLIC_SOCKET_URL="http://localhost:3000"
-   ```
-
-4. **Set up the database**
-
-   ```bash
-   # Generate Prisma Client
-   npx prisma generate
-
-   # Run migrations to create database tables
-   npx prisma migrate dev
-
-   # (Optional) View your database in Prisma Studio
-   npx prisma studio
-   ```
-
-5. **Start the development server**
-
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-6. **Open your browser**
-   ```
-   http://localhost:3000
-   ```
-
-### Useful Commands
+## Quick Start
 
 ```bash
-# Development
-npm run dev              # Start development server with Socket.io
-npm run build            # Build for production
-npm run start            # Start production server
+# Install dependencies
+npm install
 
-# Database
-npm run db:push          # Push schema changes without migrations
-npm run db:migrate       # Create and run a new migration
-npm run db:studio        # Open Prisma Studio
+# Set up environment variables
+cp env.example .env
+# Edit .env with your credentials
 
-# Linting
-npm run lint             # Run ESLint
+# Set up database
+npx prisma generate
+npx prisma migrate dev
+
+# Start development server
+npm run dev
 ```
+
+Visit: **http://localhost:3000**
 
 ---
 
-## 📁 Project Structure
+## What is Trip Companion?
 
-```
-Trips/
-├── app/                          # Next.js App Router
-│   ├── api/                      # API routes
-│   │   ├── auth/                 # Authentication endpoints
-│   │   └── user/                 # User management endpoints
-│   ├── auth/                     # Auth pages (login, register)
-│   ├── dashboard/                # Dashboard page
-│   ├── profile/                  # Profile pages (view, edit)
-│   ├── trips/                    # Trip pages (placeholder for Week 2)
-│   ├── bookmarks/                # Bookmarks page (placeholder for Week 3)
-│   ├── notifications/            # Notifications page (placeholder for Week 3)
-│   ├── layout.tsx                # Root layout
-│   └── page.tsx                  # Home page
-├── components/                   # React components
-│   ├── Navbar.tsx                # Navigation component
-│   └── providers/                # Context providers
-├── lib/                          # Utilities and configurations
-│   ├── auth.ts                   # NextAuth configuration
-│   ├── prisma.ts                 # Prisma client
-│   └── utils.ts                  # Utility functions
-├── prisma/                       # Database schema and migrations
-│   ├── schema.prisma             # Database schema
-│   └── migrations/               # Migration history
-└── public/                       # Static assets
-```
+Trip Companion helps travelers find compatible companions for their adventures. Users can:
 
----
-
-## Database Schema
-
-### Implemented Tables:
-
-- **users** - User accounts and profiles
-- **trips** - Trip posts (ready for Week 2)
-- **trip_images** - Mood board images (ready for Week 2)
-- **trip_attendees** - Join requests (ready for Week 3)
-- **trip_bookmarks** - Saved trips (ready for Week 3)
-- **chat_rooms** - Trip group chats (ready for Week 4)
-- **chat_messages** - Chat messages (ready for Week 4)
-- **notifications** - In-app notifications (ready for Week 3)
+- ✅ Create and browse trip posts with details, dates, and budgets
+- ✅ Discover compatible travel companions through filters
+- ✅ Request to join trips and manage attendees
+- ✅ Chat in real-time with trip members
+- ✅ Bookmark trips and get notifications
+- ✅ Manage profiles with avatars and bios
 
 ---
 
 ## Tech Stack
 
-### Frontend
-
-- **Framework**: Next.js 14+ (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **State**: React Query (planned)
-- **Forms**: React Hook Form (planned)
-
-### Backend
-
-- **Runtime**: Next.js API Routes
-- **Database**: PostgreSQL (Supabase)
-- **ORM**: Prisma
-- **Authentication**: NextAuth.js v5
-- **File Storage**: Cloudinary
-
-### Development
-
-- **Package Manager**: Yarn
-- **Linting**: ESLint
-- **Type Checking**: TypeScript
+**Frontend**: Next.js 16, React 19, TypeScript, Tailwind CSS  
+**Backend**: Next.js API Routes, Prisma, PostgreSQL  
+**Real-time**: Socket.io for group chat  
+**Auth**: NextAuth.js v5  
+**Media**: Cloudinary for images
 
 ---
 
-## Roadmap
+## 📖 Documentation Links
 
-### Week 1: Authentication & User Profiles (COMPLETE)
-
-- User registration and login
-- Profile management
-- Avatar uploads
-- Dashboard
-
-### Week 2: Trip Creation & Discovery (Next)
-
-- Trip creation form
-- Mood board images
-- Trip display pages
-- Browse and filter trips
-
-### Week 3: Social Features
-
-- Bookmark trips
-- Join requests
-- Approve/reject workflow
-- In-app notifications
-
-### Week 4: Real-time Chat & Deployment
-
-- Trip group chat
-- Real-time messaging
-- Polish and bug fixes
-- Deploy to production
+| Document                                   | Purpose                    | Audience                |
+| ------------------------------------------ | -------------------------- | ----------------------- |
+| [FEATURES.md](./FEATURES.md)               | Complete feature guide     | Users, Product Managers |
+| [DEVELOPER_GUIDE.md](./DEVELOPER_GUIDE.md) | Technical setup & API docs | Developers              |
+| [DEPLOYMENT.md](./DEPLOYMENT.md)           | Deployment instructions    | DevOps, Developers      |
 
 ---
 
-## Deployment
+## Contributing
 
-**Planned Deployment Stack:**
-
-- **Frontend**: Vercel (free tier)
-- **Database**: Supabase (free tier)
-- **Images**: Cloudinary (free tier)
-- **Socket.io**: Railway/Render (Week 4)
-
----
-
-## 🤝 Contributing
-
-This is a learning project following a 4-week MVP timeline.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
-## Built with:
+## License
 
-- Next.js 14
-- NextAuth.js v5
-- Prisma ORM
-- Tailwind CSS
-- Cloudinary
-- Supabase
+This project is built as a learning project and portfolio piece.
 
 ---
+
+## ⭐ Built With
+
+- [Next.js](https://nextjs.org) - React framework
+- [TypeScript](https://www.typescriptlang.org) - Type safety
+- [Prisma](https://www.prisma.io) - Database ORM
+- [Socket.io](https://socket.io) - Real-time communication
+- [NextAuth.js](https://next-auth.js.org) - Authentication
+- [Cloudinary](https://cloudinary.com) - Image management
+- [Tailwind CSS](https://tailwindcss.com) - Styling
+
+---
+
+**Happy Traveling! 🌍✈️**

@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import JoinRequestButton from './JoinRequestButton';
 
@@ -19,13 +18,6 @@ export default function TripActions({
   currentGroupSize, 
   requiredGroupSize 
 }: TripActionsProps) {
-  const [, setRefresh] = useState(0);
-
-  const handleRequestSent = () => {
-    // Trigger refresh
-    setRefresh(prev => prev + 1);
-  };
-
   if (isOwner) {
     return (
       <Link
@@ -45,7 +37,6 @@ export default function TripActions({
         isOwner={isOwner}
         currentGroupSize={currentGroupSize}
         requiredGroupSize={requiredGroupSize}
-        onRequestSent={handleRequestSent}
       />
     </div>
   );
