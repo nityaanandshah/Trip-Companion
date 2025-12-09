@@ -1,6 +1,6 @@
-# Developer Guide - Trip Companion
+# Developer Guide - TerraMates
 
-Complete technical documentation for developers setting up and working with the Trip Companion application.
+Complete technical documentation for developers setting up and working with the TerraMates application.
 
 ---
 
@@ -18,12 +18,14 @@ Complete technical documentation for developers setting up and working with the 
 ## Prerequisites
 
 ### Required Software
+
 - **Node.js**: v20.19+, v22.12+, or v24.0+
 - **npm** or **yarn**: Latest version
 - **PostgreSQL**: Any recent version (or use cloud provider)
 - **Git**: For version control
 
 ### Required Accounts
+
 - **Supabase**: For PostgreSQL database (free tier available)
 - **Cloudinary**: For image uploads and storage (free tier available)
 
@@ -32,6 +34,7 @@ Complete technical documentation for developers setting up and working with the 
 ## Tech Stack
 
 ### Frontend
+
 - **Framework**: Next.js 16.0.3 (App Router)
 - **Language**: TypeScript 5.9.3
 - **UI Framework**: React 19.2.0
@@ -39,6 +42,7 @@ Complete technical documentation for developers setting up and working with the 
 - **Forms**: React Hook Form 7.68.0 + Zod 4.1.13
 
 ### Backend
+
 - **Runtime**: Node.js with Next.js API Routes
 - **Database**: PostgreSQL
 - **ORM**: Prisma 5.22.0
@@ -47,6 +51,7 @@ Complete technical documentation for developers setting up and working with the 
 - **File Storage**: Cloudinary
 
 ### Development
+
 - **Package Manager**: npm/yarn
 - **Linting**: ESLint
 - **Type Checking**: TypeScript strict mode
@@ -163,6 +168,7 @@ npx prisma generate
 ## Troubleshooting
 
 ### Port 3000 already in use
+
 ```bash
 lsof -ti:3000 | xargs kill -9
 # or use different port
@@ -170,26 +176,31 @@ PORT=3001 npm run dev
 ```
 
 ### Prisma Client not found
+
 ```bash
 npx prisma generate
 ```
 
 ### Database connection failed
+
 - Check `DATABASE_URL` in `.env`
 - Verify database is running
 - For Supabase: check project isn't paused
 
 ### Images not uploading
+
 - Verify all Cloudinary env vars are set
 - Check API key permissions
 - Verify cloud name is correct
 
 ### Socket.io not connecting
+
 - Check `NEXT_PUBLIC_APP_URL` matches your URL
 - Verify server is running (`npm run dev`)
 - Check browser console for errors
 
 ### Build errors
+
 ```bash
 # Clear Next.js cache
 rm -rf .next
@@ -197,6 +208,7 @@ npm run build
 ```
 
 ### TypeScript errors
+
 ```bash
 # Regenerate types
 npx prisma generate
@@ -214,5 +226,3 @@ npm run build
 - **Cloudinary Docs**: [cloudinary.com/documentation](https://cloudinary.com/documentation)
 
 ---
-
-

@@ -1,6 +1,6 @@
-# Trip Companion - Find Your Travel Buddies
+# TerraMates - Find Your Travel Mates
 
-A social platform to find and connect with compatible travel companions for your trips.
+A social platform to find and connect with compatible travel mates for your adventures.
 
 ![Trip Companion](https://img.shields.io/badge/Next.js-16-black?style=flat-square)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat-square)
@@ -51,9 +51,9 @@ Visit: **http://localhost:3000**
 
 ---
 
-## What is Trip Companion?
+## What is TerraMates?
 
-Trip Companion helps travelers find compatible companions for their adventures. Users can:
+TerraMates helps travelers find compatible travel mates for their adventures. Users can:
 
 - ✅ Create and browse trip posts with details, dates, and budgets
 - ✅ Discover compatible travel companions through filters

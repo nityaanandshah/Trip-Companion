@@ -1,8 +1,8 @@
-# Trip Companion - Features Guide
+# TerraMates - Features Guide
 
-## What is Trip Companion?
+## What is TerraMates?
 
-Trip Companion is a social platform that helps travelers find and connect with compatible travel companions for their trips. Think of it as a way to discover travel buddies who share your interests, budget, and travel style!
+TerraMates is a social platform that helps travelers find and connect with compatible travel mates for their adventures. Think of it as a way to discover travel companions who share your interests, budget, and travel style!
 
 ---
 

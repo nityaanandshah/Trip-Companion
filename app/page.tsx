@@ -24,8 +24,7 @@ export default function Home() {
                 <path d="M32 20v8M32 36v12" strokeLinecap="round"/>
               </svg>
               <div className="flex flex-col">
-                <span className="text-xs uppercase tracking-wider font-sans font-medium" style={{ color: 'rgba(245, 239, 227, 0.8)' }}>Finding</span>
-                <span className="text-xl font-display font-bold -mt-1 leading-none" style={{ color: '#F5EFE3' }}>Travel Buddies</span>
+                <span className="text-xl font-display font-bold leading-none" style={{ color: '#F5EFE3' }}>TerraMates</span>
               </div>
             </Link>
             <div className="flex items-center gap-4">
@@ -54,8 +53,7 @@ export default function Home() {
           {/* Left Content */}
           <div>
             <h1 className="text-6xl font-display font-bold mb-6 leading-tight" style={{ color: '#2B5F5E' }}>
-              Finding<br />
-              Travel Buddies
+              TerraMates
             </h1>
             <p className="text-xl font-sans mb-8 leading-relaxed" style={{ color: '#33353B' }}>
               Connect with fellow travelers around the world and discover your next adventure together.
@@ -190,10 +188,10 @@ export default function Home() {
                 <circle cx="32" cy="32" r="3" fill="currentColor" />
                 <path d="M32 20v8M32 36v12" strokeLinecap="round"/>
               </svg>
-              <span className="font-display font-bold text-lg" style={{ color: '#2B5F5E' }}>Finding Travel Buddies</span>
+              <span className="font-display font-bold text-lg" style={{ color: '#2B5F5E' }}>TerraMates</span>
             </div>
             <p className="font-sans text-sm" style={{ color: 'rgba(51, 53, 59, 0.7)' }}>
-              © 2025 Finding Travel Buddies. All rights reserved.
+              © 2025 TerraMates. All rights reserved.
             </p>
           </div>
         </div>

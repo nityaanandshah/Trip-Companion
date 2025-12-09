@@ -59,10 +59,9 @@ export default function Navbar() {
                   <circle cx="32" cy="32" r="3" fill="currentColor" />
                   <path d="M32 20v8M32 36v12" strokeLinecap="round"/>
                 </svg>
-                <div className="flex flex-col">
-                  <span className="text-xs uppercase tracking-wider font-sans font-medium" style={{ color: 'rgba(245, 239, 227, 0.8)' }}>Finding</span>
-                  <span className="text-xl font-display font-bold -mt-1 leading-none" style={{ color: '#F5EFE3' }}>Travel Buddies</span>
-                </div>
+              <div className="flex flex-col">
+                <span className="text-xl font-display font-bold leading-none" style={{ color: '#F5EFE3' }}>TerraMates</span>
+              </div>
               </Link>
             </div>
             <div className="hidden sm:ml-2 sm:flex sm:space-x-6">

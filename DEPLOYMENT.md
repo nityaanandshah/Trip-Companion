@@ -1,6 +1,6 @@
-# Deployment Guide - Trip Companion
+# Deployment Guide - TerraMates
 
-Complete deployment instructions for getting Trip Companion app live in production.
+Complete deployment instructions for getting TerraMates app live in production.
 
 ---
 
@@ -40,7 +40,7 @@ git push origin main
 
 | Setting           | Value                                                 |
 | ----------------- | ----------------------------------------------------- |
-| **Name**          | `trip-companion`                                      |
+| **Name**          | `terramates`                                          |
 | **Environment**   | `Node`                                                |
 | **Branch**        | `main`                                                |
 | **Build Command** | `npm install && npx prisma generate && npm run build` |
@@ -57,7 +57,7 @@ DATABASE_URL=postgresql://user:pass@host/database
 
 # Auth (generate secret with: openssl rand -base64 32)
 NEXTAUTH_SECRET=your-generated-secret
-NEXTAUTH_URL=https://trip-companion.onrender.com
+NEXTAUTH_URL=https://terramates.onrender.com
 
 # Cloudinary
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
@@ -65,7 +65,7 @@ CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
 
 # App URL
-NEXT_PUBLIC_APP_URL=https://trip-companion.onrender.com
+NEXT_PUBLIC_APP_URL=https://terramates.onrender.com
 
 # Node Environment
 NODE_ENV=production
@@ -75,7 +75,7 @@ NODE_ENV=production
 
 1. Click **"Create Web Service"**
 2. Wait 3-5 minutes for first deploy
-3. Get your URL (e.g., `https://trip-companion.onrender.com`)
+3. Get your URL (e.g., `https://terramates.onrender.com`)
 
 ### Step 6: Update URLs
 
@@ -205,4 +205,4 @@ Once deployed, your app is live! 🎉
 
 Share your deployment URL:
 
-- **Render**: `https://your-app.onrender.com`
+- **Render**: `https://terramates.onrender.com`
