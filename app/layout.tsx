@@ -23,11 +23,11 @@ export const metadata: Metadata = {
   description: 'Connect with travelers around the world and find your perfect travel mates for your adventures',
   icons: {
     icon: [
-      { url: '/tc_badge.png', sizes: '32x32', type: 'image/png' },
-      { url: '/tc_badge.png', sizes: '16x16', type: 'image/png' },
+      { url: '/new logo.png', sizes: '32x32', type: 'image/png' },
+      { url: '/new logo.png', sizes: '16x16', type: 'image/png' },
     ],
     apple: [
-      { url: '/tc_badge.png', sizes: '180x180', type: 'image/png' },
+      { url: '/new logo.png', sizes: '180x180', type: 'image/png' },
     ],
   },
 };
