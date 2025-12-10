@@ -52,11 +52,12 @@ git push origin main
 Click **"Advanced"** → **"Add Environment Variable"**:
 
 ```bash
-# Database
-DATABASE_URL=postgresql://user:pass@host/database
+# Database (Use Transaction mode from Supabase)
+DATABASE_URL=postgresql://user:pass@host:6543/database?pgbouncer=true
+DATABASE_URL_UNPOOLED=postgresql://user:pass@host:5432/database
 
 # Auth (generate secret with: openssl rand -base64 32)
-NEXTAUTH_SECRET=your-generated-secret
+AUTH_SECRET=your-generated-secret
 NEXTAUTH_URL=https://terramates.onrender.com
 
 # Cloudinary
@@ -96,9 +97,21 @@ Click **"Save Changes"** - Render will automatically redeploy.
 
 1. Go to [supabase.com](https://supabase.com)
 2. Create new project
-3. Settings → Database → Connection string (Transaction mode)
-4. Copy connection string
-5. Use as `DATABASE_URL`
+3. Get **both** connection strings from Settings → Database:
+
+**For `DATABASE_URL` (Pooled - Port 6543):**
+
+- Go to **Connection string** → **Session mode** or **Transaction mode**
+- This uses connection pooling (port 6543)
+- Used for runtime database queries
+
+**For `DATABASE_URL_UNPOOLED` (Direct - Port 5432):**
+
+- Go to **Connection string** → **Direct connection**
+- This is a direct connection (port 5432)
+- Required for Prisma migrations during deployment
+
+**Important:** Render/production needs both URLs for migrations to work!
 
 ---
 
@@ -119,10 +132,11 @@ Click **"Save Changes"** - Render will automatically redeploy.
 
 ```bash
 # Database (Required)
-DATABASE_URL="postgresql://user:pass@host:5432/database"
+DATABASE_URL="postgresql://user:pass@host:6543/database?pgbouncer=true"  # Pooled connection
+DATABASE_URL_UNPOOLED="postgresql://user:pass@host:5432/database"  # Direct connection for migrations
 
 # NextAuth (Required)
-NEXTAUTH_SECRET="generate-with-openssl-rand-base64-32"
+AUTH_SECRET="generate-with-openssl-rand-base64-32"
 NEXTAUTH_URL="https://your-domain.com"
 
 # Cloudinary (Required)
@@ -143,7 +157,7 @@ NODE_ENV="production"
 openssl rand -base64 32
 ```
 
-Copy output and use as `NEXTAUTH_SECRET`.
+Copy output and use as `AUTH_SECRET`.
 
 ---
 
@@ -188,14 +202,16 @@ After deploying:
 
 ## Common Issues & Solutions
 
-| Issue               | Solution                                        |
-| ------------------- | ----------------------------------------------- |
-| Build timeout       | Increase build timeout or optimize dependencies |
-| Out of memory       | Upgrade to paid plan or optimize code           |
-| Slow cold starts    | Upgrade to always-on plan                       |
-| Database timeout    | Use connection pooling                          |
-| Image 413 error     | Reduce image size before upload                 |
-| Chat not connecting | Check Socket.io server logs                     |
+| Issue                         | Solution                                                       |
+| ----------------------------- | -------------------------------------------------------------- |
+| Build hangs at migrate deploy | Add `DATABASE_URL_UNPOOLED` with direct connection (port 5432) |
+| Build timeout                 | Increase build timeout or optimize dependencies                |
+| Out of memory                 | Upgrade to paid plan or optimize code                          |
+| Slow cold starts              | Upgrade to always-on plan                                      |
+| Database connection timeout   | Check both pooled and direct URLs are correct                  |
+| Prisma migration errors       | Ensure `directUrl` is set in schema.prisma                     |
+| Image 413 error               | Reduce image size before upload                                |
+| Chat not connecting           | Check Socket.io server logs                                    |
 
 ---
 

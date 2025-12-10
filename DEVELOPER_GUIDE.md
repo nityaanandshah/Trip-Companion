@@ -119,7 +119,7 @@ Create a `.env` file with these variables:
 DATABASE_URL="postgresql://user:password@host:5432/database"
 
 # NextAuth (Required)
-NEXTAUTH_SECRET="your-secret-key"  # Generate with: openssl rand -base64 32
+AUTH_SECRET="your-secret-key"  # Generate with: openssl rand -base64 32
 NEXTAUTH_URL="http://localhost:3000"
 
 # Cloudinary (Required)
