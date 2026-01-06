@@ -276,11 +276,10 @@ export default function NotificationsPage() {
                             <img
                               src={notification.userAvatarUrl}
                               alt={notification.userName || 'User'}
-                              className="h-12 w-12 rounded-full object-cover ring-2"
-                              style={{ ringColor: '#DAAA63' }}
+                              className="h-12 w-12 rounded-full object-cover ring-2 ring-[#DAAA63]"
                             />
                           ) : (
-                            <div className="h-12 w-12 rounded-full flex items-center justify-center text-white font-semibold ring-2" style={{ backgroundColor: '#DAAA63', ringColor: '#F5EFE3' }}>
+                            <div className="h-12 w-12 rounded-full flex items-center justify-center text-white font-semibold ring-2 ring-[#F5EFE3]" style={{ backgroundColor: '#DAAA63' }}>
                               {notification.userName?.[0]?.toUpperCase() || 'U'}
                             </div>
                           )}
