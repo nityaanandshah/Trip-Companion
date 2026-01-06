@@ -156,13 +156,11 @@ export default function TripMembersCard({
                     <img
                       src={member.avatarUrl}
                       alt={member.name}
-                      className="h-12 w-12 rounded-full object-cover ring-2"
-                      style={{ ringColor: member.isOwner ? '#2B5F5E' : 'rgba(51, 53, 59, 0.2)' }}
+                      className={`h-12 w-12 rounded-full object-cover ring-2 ${member.isOwner ? 'ring-[#2B5F5E]' : 'ring-[rgba(51,53,59,0.2)]'}`}
                     />
                   ) : (
-                    <div className="h-12 w-12 rounded-full flex items-center justify-center ring-2" style={{ 
-                      backgroundColor: '#DAAA63', 
-                      ringColor: member.isOwner ? '#2B5F5E' : 'rgba(51, 53, 59, 0.2)' 
+                    <div className={`h-12 w-12 rounded-full flex items-center justify-center ring-2 ${member.isOwner ? 'ring-[#2B5F5E]' : 'ring-[rgba(51,53,59,0.2)]'}`} style={{ 
+                      backgroundColor: '#DAAA63'
                     }}>
                       <span className="text-lg font-bold text-white">
                         {member.name?.[0]?.toUpperCase() || 'U'}

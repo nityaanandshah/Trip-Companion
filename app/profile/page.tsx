@@ -79,11 +79,10 @@ export default async function ProfilePage() {
                   <img
                     src={user.avatarUrl}
                     alt={user.name || 'User avatar'}
-                    className="h-24 w-24 rounded-full object-cover ring-4"
-                    style={{ ringColor: 'rgba(255, 255, 255, 0.3)' }}
+                    className="h-24 w-24 rounded-full object-cover ring-4 ring-white/30"
                   />
                 ) : (
-                  <div className="flex h-24 w-24 items-center justify-center rounded-full ring-4" style={{ backgroundColor: '#DAAA63', ringColor: 'rgba(255, 255, 255, 0.3)' }}>
+                  <div className="flex h-24 w-24 items-center justify-center rounded-full ring-4 ring-white/30" style={{ backgroundColor: '#DAAA63' }}>
                     <span className="text-3xl font-display font-bold" style={{ color: '#33353B' }}>
                       {user.name?.[0]?.toUpperCase() || 'U'}
                     </span>

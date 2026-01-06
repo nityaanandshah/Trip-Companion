@@ -103,11 +103,10 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
               <img
                 src={user.avatarUrl}
                 alt={user.name || 'User'}
-                className="h-32 w-32 rounded-full object-cover ring-4"
-                style={{ ringColor: 'rgba(255, 255, 255, 0.3)' }}
+                className="h-32 w-32 rounded-full object-cover ring-4 ring-white/30"
               />
             ) : (
-              <div className="h-32 w-32 rounded-full flex items-center justify-center ring-4" style={{ backgroundColor: '#DAAA63', ringColor: 'rgba(255, 255, 255, 0.3)' }}>
+              <div className="h-32 w-32 rounded-full flex items-center justify-center ring-4 ring-white/30" style={{ backgroundColor: '#DAAA63' }}>
                 <span className="text-5xl font-display font-bold" style={{ color: '#33353B' }}>
                   {user.name?.[0]?.toUpperCase() || 'U'}
                 </span>

@@ -195,11 +195,10 @@ export default function EditProfilePage() {
                 <img
                   src={formData.avatarUrl}
                   alt="Avatar preview"
-                  className="h-24 w-24 rounded-full object-cover ring-4"
-                  style={{ ringColor: '#EBDCC4' }}
+                  className="h-24 w-24 rounded-full object-cover ring-4 ring-[#EBDCC4]"
                 />
               ) : (
-                <div className="flex h-24 w-24 items-center justify-center rounded-full ring-4" style={{ backgroundColor: '#DAAA63', ringColor: '#EBDCC4' }}>
+                <div className="flex h-24 w-24 items-center justify-center rounded-full ring-4 ring-[#EBDCC4]" style={{ backgroundColor: '#DAAA63' }}>
                   <span className="text-3xl font-display font-bold" style={{ color: '#33353B' }}>
                     {formData.name?.[0]?.toUpperCase() || session?.user?.name?.[0]?.toUpperCase() || 'U'}
                   </span>

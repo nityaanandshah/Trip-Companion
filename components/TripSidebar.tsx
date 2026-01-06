@@ -74,11 +74,10 @@ export default function TripSidebar({ trip, isOwner }: TripSidebarProps) {
             <img
               src={trip.owner.avatarUrl}
               alt={trip.owner.name || 'User'}
-              className="h-16 w-16 rounded-full object-cover ring-4"
-              style={{ ringColor: 'rgba(51, 53, 59, 0.1)' }}
+              className="h-16 w-16 rounded-full object-cover ring-4 ring-[rgba(51,53,59,0.1)]"
             />
           ) : (
-            <div className="h-16 w-16 rounded-full flex items-center justify-center ring-4" style={{ background: 'linear-gradient(to bottom right, #2B5F5E, #DAAA63)', ringColor: 'rgba(51, 53, 59, 0.1)' }}>
+            <div className="h-16 w-16 rounded-full flex items-center justify-center ring-4 ring-[rgba(51,53,59,0.1)]" style={{ background: 'linear-gradient(to bottom right, #2B5F5E, #DAAA63)' }}>
               <span className="text-2xl font-bold text-white">
                 {trip.owner.name?.[0]?.toUpperCase() || 'U'}
               </span>
