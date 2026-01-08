@@ -24,12 +24,20 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/d5e55fd7-cdcb-4cd5-8b6b-cd7c5e595a7c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'login/page.tsx:28',message:'login attempt start',data:{email,hasPassword:!!password},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
+
     try {
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
       });
+
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/d5e55fd7-cdcb-4cd5-8b6b-cd7c5e595a7c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'login/page.tsx:38',message:'signIn result',data:{hasError:!!result?.error,error:result?.error,ok:result?.ok,status:result?.status,url:result?.url},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
+      // #endregion
 
       if (result?.error) {
         setError('Invalid email or password');
@@ -38,6 +46,9 @@ export default function LoginPage() {
         router.refresh();
       }
     } catch (err) {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/d5e55fd7-cdcb-4cd5-8b6b-cd7c5e595a7c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'login/page.tsx:49',message:'login exception',data:{error:err instanceof Error ? err.message : String(err)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'})}).catch(()=>{});
+      // #endregion
       setError('Something went wrong. Please try again.');
     } finally {
       setLoading(false);
